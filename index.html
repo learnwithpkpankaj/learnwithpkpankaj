@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Learn With P K PANKAJ - होमपेज</title>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        /* 🌐 ड्रॉप-डाउन मेनू का CSS कोड */
+        .navbar {
+            background-color: #0d47a1; /* गहरा नीला रंग */
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            border-left: none;
+            display: flex; 
+        }
+
+        .navbar li {
+            position: relative;
+            margin-bottom: 0;
+        }
+
+        .navbar li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .navbar li a:hover, .dropdown:hover .dropbtn {
+            background-color: #1565c0;
+            color: #fbc02d; 
+        }
+
+        .dropdown-content {
+            display: none; 
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 220px; /* थोड़ा चौड़ा किया ताकि नाम सही से आएं */
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+            border-top: 3px solid #fbc02d;
+        }
+
+        .dropdown-content a {
+            color: #333333 !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            font-weight: normal;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f5f5f5 !important;
+            color: #0d47a1 !important;
+            font-weight: bold;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        h1 {
+            color: #0d47a1;
+            border-bottom: 3px solid #fbc02d;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #1565c0;
+            margin-top: 30px;
+        }
+
+        /* सामान्य लिस्ट का स्टाइल */
+        .content-section ul, .content-section ol {
+            background-color: #f9f9f9;
+            padding: 20px 40px;
+            border-left: 5px solid #0d47a1;
+            border-radius: 4px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .links-box {
+            background: linear-gradient(135deg, #0d47a1, #1976d2);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .links-box h2 {
+            color: #ffffff;
+            margin-top: 0;
+        }
+
+        .links-box a {
+            color: #fbc02d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .links-box a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- बैनर इमेज -->
+        <div style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
+            <img src="banner.jpg" alt="Learn With P K PANKAJ - Empowering Students" style="width: 100%; max-width: 1200px; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+        </div>
+
+        <!-- 🌐 अपडेटेड ड्रॉप-डाउन नेविगेशन बार (Navbar) -->
+        <nav class="navbar">
+            <ul>
+                <li><a href="#">होम (Home)</a></li>
+                
+                <!-- पहला ड्रॉप-डाउन: हमारे विषय -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">मुख्य विषय ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#">विज्ञान (Science)</a>
+                        <a href="#">गणित (Mathematics)</a>
+                        <a href="#">सामान्य ज्ञान (GK)</a>
+                    </div>
+                </li>
+
+                <!-- दूसरा ड्रॉप-डाउन: विशेष अभियान (इसमें से अनुसंधानम् हटा दिया गया है) -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">विशेष अभियान ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#">NMMSS छात्रवृत्ति</a>
+                        <a href="#">प्रोजेक्ट बेस्ड LEARNING (PBL)</a>
+                    </div>
+                </li>
+
+                <!-- 🆕 तीसरा नया ड्रॉप-डाउन: Publication (यहाँ शिफ्ट किया गया है) -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Publication ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#">'अनुसंधानम्' </a>
+                        <a href="safesaturday.html">सुरक्षित शनिवार (साप्ताहिक PDF)</a>
+                    </div>
+                </li>
+
+                <li><a href="#">हमसे संपर्क करें</a></li>
+            </ul>
+        </nav>
+
+        <div class="content-section">
+            <!-- मुख्य हेडिंग (Brand Name) -->
+            <h1>Learn With P K PANKAJ</h1>
+            <p style="font-size: 18px; line-height: 1.6;"><strong>आपका स्वागत है!</strong> यह शिक्षा, विज्ञान और तकनीकी ज्ञान को आसान भाषा में सीखने का एक आधुनिक डिजिटल मंच है।</p>
+            
+            <!-- हमारे मुख्य विषय -->
+            <h2>हमारे मुख्य शिक्षण विषय (Key Subjects)</h2>
+            <p>हम कक्षा 1 से 10 तक के विद्यार्थियों के लिए ज्ञानवर्धक और एनिमेटेड कंटेंट तैयार करते हैं:</p>
+            <ul>
+                <li><strong>विज्ञान (Science)</strong> - प्रयोगों और एनिमेशन के साथ</li>
+                <li><strong>गणित (Mathematics)</strong> - आसान ट्रिक्स और लॉजिक के साथ</li>
+                <li><strong>सामान्य ज्ञान (General Knowledge)</strong> - दैनिक क्विज़ और रोचक तथ्य</li>
+            </ul>
+
+            <!-- हमारे मुख्य प्रोजेक्ट्स -->
+            <h2>महत्वपूर्ण शैक्षणिक अभियान व प्रकाशन (Our Projects & Publications)</h2>
+            <p>विद्यार्थियों के सर्वांगीण विकास और जागरूकता के लिए हम इन विशेष कार्यक्रमों पर काम करते हैं:</p>
+            <ol>
+                <li>राष्ट्रीय आय-सह-मेधा छात्रवृत्ति योजना (NMMSS) की तैयारी और मार्गदर्शन</li>
+                <li>प्रोजेक्ट बेस्ड लर्निंग (PBL) आधारित वीडियो सेशन्स</li>
+                <li>'अनुसंधानम्' साइंस मैगज़ीन के माध्यम से नन्हें वैज्ञानिकों को प्रोत्साहन</li>
+                <li>'सुरक्षित शनिवार' कार्यक्रम के तहत आपदा प्रबंधन और सुरक्षा जागरूकता पाठ</li>
+            </ol>
+        </div>
+
+        <!-- सोशल मीडिया और संपर्क लिंक्स -->
+        <div class="links-box">
+            <h2>हमसे जुड़ें (Connect With Us)</h2>
+            <p>हमारे एनिमेटेड वीडियो और नवीनतम अपडेट्स देखने के लिए नीचे दिए गए लिंक्स पर क्लिक करें:</p>
+            <p style="font-size: 18px;">
+                🔹 यूट्यूब चैनल: <a href="https://youtube.com/@prathamprayas4100?si=HjseUWKgn9mjoZEg/" target="_blank">पर सब्सक्राइब करें</a>
+            </p>
+            <p style="font-size: 18px;">
+                🔹 फेसबुक पेज: <a href="https://www.facebook.com/share/1S1xB3EJQ7/" target="_blank">पर फॉलो करें</a>
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>

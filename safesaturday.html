@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>सुरक्षित शनिवार एवं बैगलेस डे साप्ताहिकी - Learn With P K PANKAJ</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header-area {
+            text-align: center;
+            background-color: #0d47a1;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-area h1 { margin: 0; font-size: 28px; }
+        .header-area p { margin: 5px 0 0 0; color: #fbc02d; font-weight: bold; }
+
+        /* 🖼️ ग्रिड लेआउट का असली जादू यहाँ है */
+        .magazine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* पत्रिका का हर एक बॉक्स कार्ड */
+        .magazine-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            border: 1px solid #e0e0e0;
+            transition: transform 0.2s;
+        }
+
+        .magazine-card:hover {
+            transform: translateY(-5px); /* माउस ले जाने पर कार्ड ऊपर उठेगा */
+        }
+
+        /* पत्रिका के कवर की फोटो */
+        .magazine-card img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        /* कार्ड के अंदर का टेक्स्ट और बटन एरिया */
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            width: 45%;
+        }
+
+        .btn-view {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+            border: 1px solid #0d47a1;
+        }
+
+        .btn-download {
+            background-color: #0d47a1;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #0d47a1;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <a href="index.html" class="back-btn">⬅ मुख्य होमपेज पर वापस जाएं</a>
+    </div>
+
+    <!-- हेडर सेक्शन -->
+    <div class="header-area">
+        <h1>सुरक्षित शनिवार एवं बैगलेस डे साप्ताहिकी</h1>
+        <p>सुरक्षा, सृजन एवं समग्र विकास की ओर एक पहल</p>
+    </div>
+
+    <!-- 🌐 पत्रिकाओं की ग्रिड लिस्ट -->
+    <div class="magazine-grid">
+
+        <!-- कार्ड 1: पंचम शनिवार (30 मई 2026) -->
+        <div class="magazine-card">
+            <!-- यहाँ आप अपनी मैगज़ीन के कवर पोस्टर की फोटो का नाम डालेंगे -->
+            <img src="banner.jpg" alt="पंचम शनिवार पोस्टर"> 
+            <div class="card-content">
+                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - 16 (30 मई 2026)</div>
+                <div class="action-buttons">
+                    <!-- ऑनलाइन देखने का लिंक (गूगल ड्राइव लिंक भी दे सकते हैं) -->
+                    <a href="#" target="_blank" class="btn btn-view">👁️ View</a>
+                    <!-- सीधे डाउनलोड करने का लिंक -->
+                    <a href="#" download class="btn btn-download">📥 Download</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- कार्ड 2: चतुर्थ शनिवार (23 मई 2026) -->
+        <div class="magazine-card">
+            <img src="banner.jpg" alt="चतुर्थ शनिवार पोस्टर">
+            <div class="card-content">
+                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - 15 (23 मई 2026)</div>
+                <div class="action-buttons">
+                    <a href="#" target="_blank" class="btn btn-view">👁️ View</a>
+                    <a href="#" download class="btn btn-download">📥 Download</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- कार्ड 3: द्वितीय शनिवार (09 मई 2026) -->
+        <div class="magazine-card">
+            <img src="banner.jpg" alt="द्वितीय शनिवार पोस्टर">
+            <div class="card-content">
+                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - 14 (09 मई 2026)</div>
+                <div class="action-buttons">
+                    <a href="#" target="_blank" class="btn btn-view">👁️ View</a>
+                    <a href="#" download class="btn btn-download">📥 Download</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
