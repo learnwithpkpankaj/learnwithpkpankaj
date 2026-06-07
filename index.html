@@ -1,41 +1,181 @@
-<nav class="navbar">
-            <ul>
-                <li><a href="index.html">होम (Home)</a></li>
-                
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">मुख्य विषय ▾</a>
-                    <div class="dropdown-content">
-                        <a href="#">विज्ञान (Science)</a>
-                        <a href="#">गणित (Mathematics)</a>
-                        <a href="#">सामान्य ज्ञान (GK)</a>
-                    </div>
-                </li>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn With P K PANKAJ - होमपेज</title>
+    <style>
+        /* 🎨 मुख्य वेबसाइट का रंग और फॉन्ट */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
 
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">विशेष अभियान ▾</a>
-                    <div class="dropdown-content">
-                        <a href="#">NMMSS छात्रवृत्ति</a>
-                        <a href="#">प्रोजेक्ट बेस्ड LEARNING (PBL)</a>
-                    </div>
-                </li>
+        /* 🖼️ बैनर एरिया को सही और सेंटर्ड रखने के लिए */
+        .banner-area {
+            background-color: #ffffff;
+            text-align: center;
+            padding: 15px 0;
+            border-bottom: 4px solid #0d47a1;
+        }
 
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Publication ▾</a>
-                    <div class="dropdown-content">
-                        <a href="safesaturday.html">'अनुसंधानम्' साइंस मैगज़ीन</a>
-                        <a href="safesaturday.html">सुरक्षित शनिवार (साक्यता)</a>
-                    </div>
-                </li>
+        .banner-area img {
+            max-width: 100%;
+            height: auto;
+            max-height: 220px;
+        }
 
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">News and Event ▾</a>
-                    <div class="dropdown-content">
-                        <a href="#">News (ताज़ा खबरें)</a>
-                        <a href="#">Event (स्कूली गतिविधियाँ)</a>
-                        <a href="#">Edu Docs (विभागीय दस्तावेज़)</a>
-                    </div>
-                </li>
+        /* 🌐 मुख्य नीले रंग का नेविगेशन बार */
+        .navbar {
+            background-color: #0d47a1;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
 
-                <li><a href="admin-panel.html">एडमिन पैनल</a></li>
-            </ul>
-        </nav>
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar li {
+            position: relative;
+        }
+
+        .navbar li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 16px 22px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar li a:hover, .dropdown:hover .dropbtn {
+            background-color: #1565c0;
+        }
+
+        /* ▾ ड्रॉप-डाउन मेनू सेटिंग्स (जो लिस्ट को छुपाकर बॉक्स बनाएगा) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 240px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 999;
+            border-top: 3px solid #0d47a1;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .dropdown-content a {
+            color: #333333 !important;
+            padding: 12px 18px !important;
+            text-decoration: none;
+            display: block;
+            text-align: left !important;
+            font-weight: normal !important;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #e3f2fd !important;
+            color: #0d47a1 !important;
+            font-weight: bold !important;
+        }
+
+        /* माउस ले जाने पर ड्रॉप-डाउन लिस्ट खोलना */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* 📝 वेलकम मैसेज बॉक्स */
+        .main-content {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .main-content h1 {
+            color: #0d47a1;
+            font-size: 30px;
+            margin-top: 0;
+        }
+
+        .main-content p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="banner-area">
+        <img src="banner.jpg" alt="Learn With P K PANKAJ">
+    </div>
+
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">होम (Home)</a></li>
+            
+            <li class="dropdown">
+                <a href="#" class="dropbtn">मुख्य विषय ▾</a>
+                <div class="dropdown-content">
+                    <a href="#">विज्ञान (Science)</a>
+                    <a href="#">गणित (Mathematics)</a>
+                    <a href="#">सामान्य ज्ञान (GK)</a>
+                </div>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="dropbtn">विशेष अभियान ▾</a>
+                <div class="dropdown-content">
+                    <a href="#">NMMSS छात्रवृत्ति</a>
+                    <a href="#">प्रोजेक्ट बेस्ड LEARNING (PBL)</a>
+                </div>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Publication ▾</a>
+                <div class="dropdown-content">
+                    <a href="safesaturday.html">'अनुसंधानम्' साइंस मैगज़ीन</a>
+                    <a href="safesaturday.html">सुरक्षित शनिवार (साक्यता)</a>
+                </div>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="dropbtn">News and Event ▾</a>
+                <div class="dropdown-content">
+                    <a href="#">News (ताज़ा खबरें)</a>
+                    <a href="#">Event (स्कूली गतिविधियाँ)</a>
+                    <a href="#">Edu Docs (विभागीय दस्तावेज़)</a>
+                </div>
+            </li>
+
+            <li><a href="admin-panel.html">एडमिन पैनल</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <h1>Learn With P K PANKAJ में आपका स्वागत है</h1>
+        <hr style="width: 80px; border: 2px solid #0d47a1; margin: 15px auto;">
+        <p>यह मंच हमारे सभी सम्मानित शिक्षकों और प्यारे छात्र-छात्राओं के लिए शैक्षणिक सामग्री, सुरक्षित शनिवार की साप्ताहिकी, और विज्ञान पत्रिका 'अनुसंधानम्' को आसानी से प्राप्त करने का एक डिजिटल माध्यम है।</p>
+    </div>
+
+</body>
+</html>
