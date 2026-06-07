@@ -21,124 +21,47 @@
         }
 
         /* 🌐 ड्रॉप-डाउन मेनू का CSS कोड */
-        .navbar {
-            background-color: #0d47a1; /* गहरा नीला रंग */
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
+       <nav class="navbar">
+            <ul>
+                <li><a href="index.html">होम (Home)</a></li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">मुख्य विषय ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#">विज्ञान (Science)</a>
+                        <a href="#">गणित (Mathematics)</a>
+                        <a href="#">सामान्य ज्ञान (GK)</a>
+                    </div>
+                </li>
 
-        .navbar ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            background-color: transparent;
-            border-left: none;
-            display: flex; 
-        }
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">विशेष अभियान ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#">NMMSS छात्रवृत्ति</a>
+                        <a href="#">प्रोजेक्ट बेस्ड LEARNING (PBL)</a>
+                    </div>
+                </li>
 
-        .navbar li {
-            position: relative;
-            margin-bottom: 0;
-        }
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Publication ▾</a>
+                    <div class="dropdown-content">
+                        <a href="safesaturday.html">'अनुसंधानम्' साइंस मैगज़ीन</a>
+                        <a href="safesaturday.html">सुरक्षित शनिवार (साक्यता)</a>
+                    </div>
+                </li>
 
-        .navbar li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-        }
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">News and Event ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#">News (ताज़ा खबरें)</a>
+                        <a href="#">Event (स्कूली गतिविधियाँ)</a>
+                        <a href="#">Edu Docs (विभागीय दस्तावेज़)</a>
+                    </div>
+                </li>
 
-        .navbar li a:hover, .dropdown:hover .dropbtn {
-            background-color: #1565c0;
-            color: #fbc02d; 
-        }
-
-        .dropdown-content {
-            display: none; 
-            position: absolute;
-            background-color: #ffffff;
-            min-width: 220px; /* थोड़ा चौड़ा किया ताकि नाम सही से आएं */
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-            z-index: 1;
-            border-radius: 4px;
-            border-top: 3px solid #fbc02d;
-        }
-
-        .dropdown-content a {
-            color: #333333 !important;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-            font-weight: normal;
-            border-bottom: 1px solid #eeeeee;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f5f5f5 !important;
-            color: #0d47a1 !important;
-            font-weight: bold;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        h1 {
-            color: #0d47a1;
-            border-bottom: 3px solid #fbc02d;
-            padding-bottom: 10px;
-        }
-
-        h2 {
-            color: #1565c0;
-            margin-top: 30px;
-        }
-
-        /* सामान्य लिस्ट का स्टाइल */
-        .content-section ul, .content-section ol {
-            background-color: #f9f9f9;
-            padding: 20px 40px;
-            border-left: 5px solid #0d47a1;
-            border-radius: 4px;
-        }
-
-        li {
-            margin-bottom: 10px;
-            font-size: 17px;
-        }
-
-        .links-box {
-            background: linear-gradient(135deg, #0d47a1, #1976d2);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 30px;
-        }
-
-        .links-box h2 {
-            color: #ffffff;
-            margin-top: 0;
-        }
-
-        .links-box a {
-            color: #fbc02d;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .links-box a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-
+                <li><a href="admin-panel.html">एडमिन पैनल</a></li>
+            </ul>
+        </nav>
         <!-- बैनर इमेज -->
         <div style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
             <img src="banner.jpg" alt="Learn With P K PANKAJ - Empowering Students" style="width: 100%; max-width: 1200px; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
