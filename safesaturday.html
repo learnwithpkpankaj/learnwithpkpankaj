@@ -40,32 +40,12 @@
             transition: transform 0.2s;
         }
 
-        .magazine-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .magazine-card img {
-            width: 100%;
-            height: auto;
-            border-bottom: 1px solid #eeeeee;
-        }
-
-        .card-content {
-            padding: 15px;
-        }
-
-        .card-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .action-buttons {
-            display: flex;
-            justify-content: space-between;
-        }
-
+        .magazine-card:hover { transform: translateY(-5px); }
+        .magazine-card img { width: 100%; height: auto; border-bottom: 1px solid #eeeeee; }
+        .card-content { padding: 15px; }
+        .card-title { font-size: 16px; font-weight: bold; color: #333; margin-bottom: 15px; }
+        .action-buttons { display: flex; justify-content: space-between; }
+        
         .btn {
             padding: 8px 12px;
             border-radius: 4px;
@@ -76,28 +56,12 @@
             width: 45%;
         }
 
-        .btn-view {
-            background-color: #e3f2fd;
-            color: #0d47a1;
-            border: 1px solid #0d47a1;
-        }
-
-        .btn-download {
-            background-color: #0d47a1;
-            color: white;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #0d47a1;
-            text-decoration: none;
-            font-weight: bold;
-        }
+        .btn-view { background-color: #e3f2fd; color: #0d47a1; border: 1px solid #0d47a1; }
+        .btn-download { background-color: #0d47a1; color: white; }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: #0d47a1; text-decoration: none; font-weight: bold; }
+        
+        /* लोडिंग स्पिनर का स्टाइल */
+        #loading { text-align: center; font-size: 18px; color: #0d47a1; font-weight: bold; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -108,205 +72,66 @@
 
     <div class="header-area">
         <h1>सुरक्षित शनिवार एवं बैगलेस डे साप्ताहिकी</h1>
-        <p>सुरक्षा, सृजन एवं समग्र विकास की ओर एक पहल (सप्ताह 1 से 16)</p>
+        <p>सुरक्षा, सृजन एवं समग्र विकास की ओर एक पहल</p>
     </div>
 
-    <!-- 🌐 16 हफ्तों की पूरी ग्रिड लिस्ट -->
-    <div class="magazine-grid">
+    <div id="loading">🔄 आपकी पत्रिकाएं लोड हो रही हैं, कृपया प्रतीक्षा करें...</div>
 
-        <!-- सप्ताह 16 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 16"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 16</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1jCWGlAHLguwyWQPDhqcSAHIQqA26WtoKqRxerxtlU8Q/edit?usp=drive_link" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1jCWGlAHLguwyWQPDhqcSAHIQqA26WtoKqRxerxtlU8Q/edit?usp=drive_link" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
+    <div class="magazine-grid" id="magazine-container"></div>
 
-        <!-- सप्ताह 15 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 15"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 15</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1scybNkssct9neJgzIr8PmPA5jXNzFcWXZEEdiU0C2qQ/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1scybNkssct9neJgzIr8PmPA5jXNzFcWXZEEdiU0C2qQ/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
+    <script>
+        // आपकी गूगल शीट का डेटा खींचने के लिए सेटिंग्स
+        const sheetId = '1vwAcgGpKSLMlhtKKq0GkeE8OIbjrRNc_SQ21dRUVqm4';
+        const base = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
 
-        <!-- सप्ताह 14 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 14"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 14</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1tlxz2qfhJMfPgeSAzozLrI67rUwO8rl7V33me80D3Tk/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1tlxz2qfhJMfPgeSAzozLrI67rUwO8rl7V33me80D3Tk/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
+        // शीट से डेटा लोड करने का फंक्शन
+        fetch(base)
+            .then(res => res.text())
+            .then(csvText => {
+                // लोडिंग मैसेज को छुपाएं
+                document.getElementById('loading').style.display = 'none';
+                
+                // CSV डेटा को लाइनों में तोड़ना
+                const rows = csvText.split('\n').slice(1); // पहली हेडर लाइन को छोड़कर
+                const container = document.getElementById('magazine-container');
+                
+                // डेटा को उल्टे क्रम (Newest First) में दिखाने के लिए लूप
+                for (let i = rows.length - 1; i >= 0; i--) {
+                    if (!rows[i]) continue;
+                    
+                    // कॉमा के आधार पर डेटा अलग करना
+                    const columns = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    
+                    // गूगल शीट के कॉलम (0 = टाइमस्टैम्प, 1 = टाइटल, 2 = इमेज लिंक, 3 = पीडीएफ लिंक)
+                    const title = columns[1] ? columns[1].replace(/"/g, "") : "सुरक्षित शनिवार";
+                    let imgLink = columns[2] ? columns[2].replace(/"/g, "") : "banner.jpg";
+                    const pdfLink = columns[3] ? columns[3].replace(/"/g, "") : "#";
 
-        <!-- सप्ताह 13 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 13"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 13</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/14XFNhJdP3-5dLBJpEWr8Z03WeyLRYTDdzUJKiHjp7NQ/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/14XFNhJdP3-5dLBJpEWr8Z03WeyLRYTDdzUJKiHjp7NQ/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
+                    // यदि कोई इमेज लिंक न हो तो डिफॉल्ट बैनर दिखेगा
+                    if(imgLink.trim() === "") { imgLink = "banner.jpg"; }
 
-        <!-- सप्ताह 12 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 12"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 12</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1-nd0DmHqs6rzbtM1Rp-ZAwZt8zS-jr0zo9vN5OVfvE0/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1-nd0DmHqs6rzbtM1Rp-ZAwZt8zS-jr0zo9vN5OVfvE0/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- सप्ताह 11 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 11"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 11</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1TguVMSwF0ePPUKuNB7umzB81ZL8f-RDElSMNioRlTm4/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1TguVMSwF0ePPUKuNB7umzB81ZL8f-RDElSMNioRlTm4/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- सप्ताह 10 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 10"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 10</div>
-                <div class="action-buttons">
-                    <a href="यहाँ_सप्ताह_10_का_ड्राइव_लिंक" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="यहाँ_सप्ताह_10_का_ड्राइव_लिंक" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- सप्ताह 9 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 9"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 9</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1yi0IF3z8oP6wMRdZhMOePEIFPjyGCZCcjiUgcmXHc4w/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1yi0IF3z8oP6wMRdZhMOePEIFPjyGCZCcjiUgcmXHc4w/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- सप्ताह 8 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 8"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 8</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1ToBI_KMMo0b-_YKCiqYenbGh8UgCjS6kHmiF2Mu7Bxc/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1ToBI_KMMo0b-_YKCiqYenbGh8UgCjS6kHmiF2Mu7Bxc/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- सप्ताह 7 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 7"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 7</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1la6bOmrPNAozU_lYCublxYTG-sX6n8ZC21RFbA0U0Tk/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1la6bOmrPNAozU_lYCublxYTG-sX6n8ZC21RFbA0U0Tk/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- सप्ताह 6 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 6"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 6</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1-VZCAzdiSqsbT5G2igL9qfRn_O4hoLqfD4mwBmgeV0E/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1-VZCAzdiSqsbT5G2igL9qfRn_O4hoLqfD4mwBmgeV0E/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- सप्ताह 5 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 5"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 5</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1R8CwXx23Ps7udBULdfdNmQJ78_UL-UOtW6fZtks_h4U/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1R8CwXx23Ps7udBULdfdNmQJ78_UL-UOtW6fZtks_h4U/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- सप्ताह 4 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 4"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 4</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1zcgVJ0HeIwj9mBBiFejG_e6dD3bIuMUtakULDgykDgE/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1zcgVJ0HeIwj9mBBiFejG_e6dD3bIuMUtakULDgykDgE/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- सप्ताह 3 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 3"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 3</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1zytxcMPe3KZCEXJochSuhHh8dgd_6t7cmCTrEV-wvw0/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1zytxcMPe3KZCEXJochSuhHh8dgd_6t7cmCTrEV-wvw0/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- सप्ताह 2 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 2"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 2</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1uvRMbwi-ClhBS2YVep3r-NEsO1nocurlAdFkvZfkVzg/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1uvRMbwi-ClhBS2YVep3r-NEsO1nocurlAdFkvZfkVzg/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- सप्ताह 1 -->
-        <div class="magazine-card">
-            <img src="banner.jpg" alt="सप्ताह 1"> 
-            <div class="card-content">
-                <div class="card-title">सुरक्षित शनिवार और बैगलेस डे - सप्ताह 1</div>
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/presentation/d/1TxJHQNrIqkIHDFSEvbeaUUj3F2W-bYss7tljN8MhY3Y/edit?usp=sharing" target="_blank" class="btn btn-view">👁️ View</a>
-                    <a href="https://docs.google.com/presentation/d/1TxJHQNrIqkIHDFSEvbeaUUj3F2W-bYss7tljN8MhY3Y/edit?usp=sharing" target="_blank" class="btn btn-download">📥 Download</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
+                    // 🖼️ नया HTML कार्ड तैयार करना
+                    const cardHtml = `
+                        <div class="magazine-card">
+                            <img src="${imgLink}" alt="${title}">
+                            <div class="card-content">
+                                <div class="card-title">${title}</div>
+                                <div class="action-buttons">
+                                    <a href="${pdfLink}" target="_blank" class="btn btn-view">👁️ View</a>
+                                    <a href="${pdfLink}" target="_blank" class="btn btn-download">📥 Download</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    // ग्रिड में कार्ड को जोड़ना
+                    container.innerHTML += cardHtml;
+                }
+            })
+            .catch(err => {
+                document.getElementById('loading').innerText = "⚠️ डेटा लोड करने में त्रुटि हुई। कृपया दोबारा प्रयास करें।";
+                console.error(err);
+            });
+    </script>
 
 </body>
 </html>
