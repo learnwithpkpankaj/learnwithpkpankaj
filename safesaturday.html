@@ -1,137 +1,262 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
-    <title>सुरक्षित शनिवार एवं बैगलेस डे साप्ताहिकी - Learn With P K PANKAJ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="सुरक्षित शनिवार एवं बैगलेस डे साप्ताहिकी - Learn With P K PANKAJ">
+    <title>सुरक्षित शनिवार साप्ताहिकी - Learn With P K PANKAJ</title>
     <style>
+        :root {
+            --primary: #0d47a1;
+            --primary-light: #1565c0;
+            --accent: #fbc02d;
+            --ink: #1f2937;
+            --muted: #5b6472;
+            --surface: #ffffff;
+            --soft: #eef5ff;
+            --line: #d8e2f0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f4f7f6;
             margin: 0;
-            padding: 20px;
+            font-family: "Segoe UI", "Noto Sans Devanagari", Arial, sans-serif;
+            background: #f4f7fb;
+            color: var(--ink);
+            line-height: 1.6;
+        }
+
+        .page {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 18px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 16px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 800;
         }
 
         .header-area {
-            text-align: center;
-            background-color: #0d47a1;
-            color: white;
-            padding: 20px;
+            background: linear-gradient(135deg, #0d47a1, #1976d2);
+            color: #ffffff;
+            padding: 28px 22px;
             border-radius: 8px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+            box-shadow: 0 10px 26px rgba(13, 71, 161, 0.18);
         }
 
-        .header-area h1 { margin: 0; font-size: 28px; }
-        .header-area p { margin: 5px 0 0 0; color: #fbc02d; font-weight: bold; }
+        .header-area h1 {
+            margin: 0;
+            font-size: clamp(26px, 4vw, 42px);
+            line-height: 1.2;
+        }
+
+        .header-area p {
+            margin: 8px 0 0;
+            color: #fff3b0;
+            font-weight: 700;
+            font-size: 17px;
+        }
+
+        .tools-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .tools-row a {
+            color: var(--primary);
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .status {
+            text-align: center;
+            font-size: 18px;
+            color: var(--primary);
+            font-weight: 800;
+            margin: 42px 0;
+        }
 
         .magazine-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 22px;
         }
 
         .magazine-card {
-            background-color: white;
+            background: var(--surface);
+            border: 1px solid var(--line);
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            border: 1px solid #e0e0e0;
-            transition: transform 0.2s;
+            box-shadow: 0 8px 22px rgba(13, 71, 161, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .magazine-card:hover { transform: translateY(-5px); }
-        .magazine-card img { width: 100%; height: auto; border-bottom: 1px solid #eeeeee; }
-        .card-content { padding: 15px; }
-        .card-title { font-size: 16px; font-weight: bold; color: #333; margin-bottom: 15px; }
-        .action-buttons { display: flex; justify-content: space-between; }
-        
+        .magazine-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(13, 71, 161, 0.14);
+        }
+
+        .magazine-card img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            background: var(--soft);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .card-content {
+            padding: 16px;
+        }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--ink);
+            margin-bottom: 14px;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
         .btn {
-            padding: 8px 12px;
-            border-radius: 4px;
+            padding: 9px 10px;
+            border-radius: 6px;
             text-decoration: none;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 800;
             text-align: center;
-            width: 45%;
+            border: 1px solid var(--primary);
         }
 
-        .btn-view { background-color: #e3f2fd; color: #0d47a1; border: 1px solid #0d47a1; }
-        .btn-download { background-color: #0d47a1; color: white; }
-        .back-btn { display: inline-block; margin-bottom: 20px; color: #0d47a1; text-decoration: none; font-weight: bold; }
-        
-        /* लोडिंग स्पिनर का स्टाइल */
-        #loading { text-align: center; font-size: 18px; color: #0d47a1; font-weight: bold; margin-top: 50px; }
+        .btn-view {
+            background: #ffffff;
+            color: var(--primary);
+        }
+
+        .btn-download {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        @media (max-width: 620px) {
+            .page {
+                padding: 14px;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
+    <main class="page">
+        <a href="index.html" class="back-btn">← मुख्य होमपेज पर वापस जाएं</a>
 
-    <div style="max-width: 1200px; margin: 0 auto;">
-        <a href="index.html" class="back-btn">⬅ मुख्य होमपेज पर वापस जाएं</a>
-    </div>
+        <section class="header-area">
+            <h1>सुरक्षित शनिवार एवं बैगलेस डे साप्ताहिकी</h1>
+            <p>सुरक्षा, सृजन एवं समग्र विकास की ओर एक पहल</p>
+        </section>
 
-    <div class="header-area">
-        <h1>सुरक्षित शनिवार एवं बैगलेस डे साप्ताहिकी</h1>
-        <p>सुरक्षा, सृजन एवं समग्र विकास की ओर एक पहल</p>
-    </div>
+        <div class="tools-row">
+            <strong>नवीनतम प्रकाशन सबसे ऊपर दिखेंगे।</strong>
+        </div>
 
-    <div id="loading">🔄 आपकी पत्रिकाएं लोड हो रही हैं, कृपया प्रतीक्षा करें...</div>
-
-    <div class="magazine-grid" id="magazine-container"></div>
+        <div id="loading" class="status">पत्रिकाएं लोड हो रही हैं, कृपया प्रतीक्षा करें...</div>
+        <div class="magazine-grid" id="magazine-container" aria-live="polite"></div>
+    </main>
 
     <script>
-        // आपकी गूगल शीट का डेटा खींचने के लिए सेटिंग्स
-        const sheetId = '1vwAcgGpKSLMlhtKKq0GkeE8OIbjrRNc_SQ21dRUVqm4';
-        const base = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
+        const sheetId = "1vwAcgGpKSLMlhtKKq0GkeE8OIbjrRNc_SQ21dRUVqm4";
+        const base = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json`;
+        const loading = document.getElementById("loading");
+        const container = document.getElementById("magazine-container");
 
-        // शीट से डेटा लोड करने का फंक्शन
+        function cellValue(row, index, fallback) {
+            return row[index] && row[index].v ? String(row[index].v).trim() : fallback;
+        }
+
+        function createCard(title, imgLink, pdfLink) {
+            const card = document.createElement("article");
+            card.className = "magazine-card";
+
+            const img = document.createElement("img");
+            img.src = imgLink || "banner.jpg";
+            img.alt = title;
+            img.loading = "lazy";
+            img.onerror = () => {
+                img.src = "banner.jpg";
+            };
+
+            const content = document.createElement("div");
+            content.className = "card-content";
+
+            const titleEl = document.createElement("div");
+            titleEl.className = "card-title";
+            titleEl.textContent = title;
+
+            const actions = document.createElement("div");
+            actions.className = "action-buttons";
+
+            const view = document.createElement("a");
+            view.href = pdfLink;
+            view.target = "_blank";
+            view.rel = "noopener";
+            view.className = "btn btn-view";
+            view.textContent = "View";
+
+            const download = document.createElement("a");
+            download.href = pdfLink;
+            download.target = "_blank";
+            download.rel = "noopener";
+            download.className = "btn btn-download";
+            download.textContent = "Download";
+
+            actions.append(view, download);
+            content.append(titleEl, actions);
+            card.append(img, content);
+            container.appendChild(card);
+        }
+
         fetch(base)
-            .then(res => res.text())
-            .then(csvText => {
-                // लोडिंग मैसेज को छुपाएं
-                document.getElementById('loading').style.display = 'none';
-                
-                // CSV डेटा को लाइनों में तोड़ना
-                const rows = csvText.split('\n').slice(1); // पहली हेडर लाइन को छोड़कर
-                const container = document.getElementById('magazine-container');
-                
-                // डेटा को उल्टे क्रम (Newest First) में दिखाने के लिए लूप
+            .then((res) => res.text())
+            .then((data) => {
+                loading.style.display = "none";
+                const jsonData = JSON.parse(data.substring(47, data.length - 2));
+                const rows = jsonData.table.rows || [];
+
+                if (rows.length === 0) {
+                    container.innerHTML = "<p class='status'>अभी कोई पत्रिका जोड़ी नहीं गई है।</p>";
+                    return;
+                }
+
                 for (let i = rows.length - 1; i >= 0; i--) {
-                    if (!rows[i]) continue;
-                    
-                    // कॉमा के आधार पर डेटा अलग करना
-                    const columns = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                    
-                    // गूगल शीट के कॉलम (0 = टाइमस्टैम्प, 1 = टाइटल, 2 = इमेज लिंक, 3 = पीडीएफ लिंक)
-                    const title = columns[1] ? columns[1].replace(/"/g, "") : "सुरक्षित शनिवार";
-                    let imgLink = columns[2] ? columns[2].replace(/"/g, "") : "banner.jpg";
-                    const pdfLink = columns[3] ? columns[3].replace(/"/g, "") : "#";
-
-                    // यदि कोई इमेज लिंक न हो तो डिफॉल्ट बैनर दिखेगा
-                    if(imgLink.trim() === "") { imgLink = "banner.jpg"; }
-
-                    // 🖼️ नया HTML कार्ड तैयार करना
-                    const cardHtml = `
-                        <div class="magazine-card">
-                            <img src="${imgLink}" alt="${title}">
-                            <div class="card-content">
-                                <div class="card-title">${title}</div>
-                                <div class="action-buttons">
-                                    <a href="${pdfLink}" target="_blank" class="btn btn-view">👁️ View</a>
-                                    <a href="${pdfLink}" target="_blank" class="btn btn-download">📥 Download</a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    // ग्रिड में कार्ड को जोड़ना
-                    container.innerHTML += cardHtml;
+                    const row = rows[i].c || [];
+                    const title = cellValue(row, 1, "सुरक्षित शनिवार साप्ताहिकी");
+                    const imgLink = cellValue(row, 2, "banner.jpg");
+                    const pdfLink = cellValue(row, 3, "#");
+                    createCard(title, imgLink, pdfLink);
                 }
             })
-            .catch(err => {
-                document.getElementById('loading').innerText = "⚠️ डेटा लोड करने में त्रुटि हुई। कृपया दोबारा प्रयास करें।";
+            .catch((err) => {
+                loading.textContent = "डेटा लोड करने में समस्या हुई। कृपया Google Sheet sharing setting जांचें।";
                 console.error(err);
             });
     </script>
-
 </body>
 </html>

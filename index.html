@@ -3,46 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn With P K PANKAJ - Science, education, school activities, experiments and learning resources for students.">
     <title>Learn With P K PANKAJ - होमपेज</title>
     <style>
-        /* 🎨 मुख्य वेबसाइट का रंग और फॉन्ट */
+        :root {
+            --primary: #0d47a1;
+            --primary-light: #1565c0;
+            --accent: #fbc02d;
+            --ink: #1f2937;
+            --muted: #5b6472;
+            --surface: #ffffff;
+            --soft: #eef5ff;
+            --line: #d8e2f0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f4f7f6;
             margin: 0;
-            padding: 0;
-            color: #333;
+            font-family: "Segoe UI", "Noto Sans Devanagari", Arial, sans-serif;
+            background: #f4f7fb;
+            color: var(--ink);
+            line-height: 1.6;
         }
 
-        /* 🖼️ बैनर एरिया को सही और सेंटर्ड रखने के लिए */
-        .banner-area {
-            background-color: #ffffff;
-            text-align: center;
-            padding: 15px 0;
-            border-bottom: 4px solid #0d47a1;
+        .site-wrap {
+            max-width: 1180px;
+            margin: 0 auto;
+            background: var(--surface);
+            min-height: 100vh;
+            box-shadow: 0 10px 35px rgba(13, 71, 161, 0.08);
         }
 
-        .banner-area img {
-            max-width: 100%;
+        .top-strip {
+            background: var(--primary);
+            color: #ffffff;
+            padding: 10px 22px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .banner {
+            padding: 16px 18px 10px;
+            background: linear-gradient(180deg, #ffffff, #eef5ff);
+        }
+
+        .banner img {
+            display: block;
+            width: 100%;
             height: auto;
-            max-height: 220px;
+            border-radius: 8px;
+            box-shadow: 0 8px 18px rgba(13, 71, 161, 0.2);
         }
 
-        /* 🌐 मुख्य नीले रंग का नेविगेशन बार */
         .navbar {
-            background-color: #0d47a1;
             position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            z-index: 10;
+            background: var(--primary);
+            border-bottom: 4px solid var(--accent);
         }
 
         .navbar ul {
-            list-style-type: none;
-            margin: 0;
+            max-width: 1180px;
+            margin: 0 auto;
             padding: 0;
+            list-style: none;
             display: flex;
-            justify-content: center;
             flex-wrap: wrap;
         }
 
@@ -50,132 +82,328 @@
             position: relative;
         }
 
-        .navbar li a {
+        .navbar a {
             display: block;
-            color: white;
-            text-align: center;
-            padding: 16px 22px;
+            color: #ffffff;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .navbar li a:hover, .dropdown:hover .dropbtn {
-            background-color: #1565c0;
-        }
-
-        /* ▾ ड्रॉप-डाउन मेनू सेटिंग्स (जो लिस्ट को छुपाकर बॉक्स बनाएगा) */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #ffffff;
-            min-width: 240px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-            z-index: 999;
-            border-top: 3px solid #0d47a1;
-            border-radius: 0 0 4px 4px;
-        }
-
-        .dropdown-content a {
-            color: #333333 !important;
-            padding: 12px 18px !important;
-            text-decoration: none;
-            display: block;
-            text-align: left !important;
-            font-weight: normal !important;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 14px 18px;
+            font-weight: 700;
             font-size: 15px;
         }
 
-        .dropdown-content a:hover {
-            background-color: #e3f2fd !important;
-            color: #0d47a1 !important;
-            font-weight: bold !important;
+        .navbar a:hover,
+        .dropdown:hover .dropbtn {
+            background: var(--primary-light);
+            color: var(--accent);
         }
 
-        /* माउस ले जाने पर ड्रॉप-डाउन लिस्ट खोलना */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 250px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-top: 4px solid var(--accent);
+            box-shadow: 0 12px 28px rgba(31, 41, 55, 0.16);
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: var(--ink);
+            padding: 12px 16px;
+            font-weight: 600;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .dropdown-content a:hover {
+            color: var(--primary);
+            background: var(--soft);
+        }
+
         .dropdown:hover .dropdown-content {
             display: block;
         }
 
-        /* 📝 वेलकम मैसेज बॉक्स */
-        .main-content {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            text-align: center;
+        main {
+            padding: 26px 22px 36px;
         }
 
-        .main-content h1 {
-            color: #0d47a1;
-            font-size: 30px;
-            margin-top: 0;
+        .intro {
+            display: grid;
+            grid-template-columns: 1.5fr 0.9fr;
+            gap: 24px;
+            align-items: stretch;
+            margin-bottom: 28px;
         }
 
-        .main-content p {
+        .intro h1 {
+            margin: 0 0 10px;
+            color: var(--primary);
+            font-size: clamp(30px, 4vw, 48px);
+            line-height: 1.1;
+        }
+
+        .tagline {
+            color: var(--muted);
             font-size: 18px;
-            line-height: 1.8;
-            color: #555;
+            margin: 0 0 18px;
+        }
+
+        .quick-card {
+            background: var(--soft);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .quick-card h2 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 22px;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            border-radius: 6px;
+            padding: 11px 16px;
+            font-weight: 700;
+            border: 1px solid var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: var(--primary);
+        }
+
+        .section-title {
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 8px;
+            margin: 32px 0 18px;
+            font-size: 26px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .card {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 18px;
+            background: #ffffff;
+            box-shadow: 0 6px 16px rgba(13, 71, 161, 0.06);
+        }
+
+        .card h3 {
+            margin: 0 0 8px;
+            color: var(--primary-light);
+            font-size: 20px;
+        }
+
+        .card p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .project-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .project-list li {
+            background: #f9fbff;
+            border-left: 5px solid var(--primary);
+            border-radius: 6px;
+            padding: 14px 16px;
+        }
+
+        .links-box {
+            margin-top: 34px;
+            background: linear-gradient(135deg, #0d47a1, #1976d2);
+            color: #ffffff;
+            padding: 24px;
+            border-radius: 8px;
+        }
+
+        .links-box h2 {
+            margin: 0 0 10px;
+            color: #ffffff;
+        }
+
+        .links-box a {
+            color: var(--accent);
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .links-box a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            padding: 18px 22px;
+            background: #102a4c;
+            color: #dbeafe;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        @media (max-width: 780px) {
+            .top-strip {
+                display: block;
+                text-align: center;
+            }
+
+            .navbar {
+                position: static;
+            }
+
+            .navbar ul {
+                display: block;
+            }
+
+            .navbar a {
+                border-bottom: 1px solid rgba(255,255,255,0.14);
+            }
+
+            .dropdown-content {
+                position: static;
+                display: block;
+                min-width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+                border-top: 0;
+            }
+
+            .intro,
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding: 22px 16px 30px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="site-wrap">
+        <div class="top-strip">
+            <span>Learn With P K PANKAJ</span>
+            <span>Science Experiments | School Activities | Learning Tips</span>
+        </div>
 
-    <div class="banner-area">
-        <img src="banner.jpg" alt="Learn With P K PANKAJ">
+        <header class="banner">
+            <img src="banner.jpg" alt="Learn With P K PANKAJ - Empowering Students Through Science and Education">
+        </header>
+
+        <nav class="navbar" aria-label="मुख्य मेनू">
+            <ul>
+                <li><a href="index.html">होम</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">मुख्य विषय ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#subjects">विज्ञान (Science)</a>
+                        <a href="#subjects">गणित (Mathematics)</a>
+                        <a href="#subjects">सामान्य ज्ञान (GK)</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">विशेष अभियान ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#projects">NMMSS छात्रवृत्ति</a>
+                        <a href="#projects">Project Based Learning (PBL)</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Publication ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#projects">अनुसंधानम्</a>
+                        <a href="safesaturday.html">सुरक्षित शनिवार साप्ताहिकी</a>
+                    </div>
+                </li>
+                <li><a href="#connect">हमसे संपर्क करें</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section class="intro">
+                <div>
+                    <h1>Learn With P K PANKAJ</h1>
+                    <p class="tagline">विद्यार्थियों के लिए विज्ञान, शिक्षा, प्रयोग, गतिविधियां और सीखने की उपयोगी सामग्री का डिजिटल मंच।</p>
+                    <p>यहां कक्षा 1 से 10 तक के विद्यार्थियों के लिए सरल भाषा में ज्ञानवर्धक सामग्री, विज्ञान प्रयोग, स्कूल गतिविधियां, सुरक्षा जागरूकता और प्रतियोगी तैयारी से जुड़ी जानकारी उपलब्ध कराई जाती है।</p>
+                    <div class="cta-row">
+                        <a class="btn btn-primary" href="safesaturday.html">सुरक्षित शनिवार देखें</a>
+                        <a class="btn btn-secondary" href="#connect">YouTube / Facebook</a>
+                    </div>
+                </div>
+                <aside class="quick-card">
+                    <h2>हमारा उद्देश्य</h2>
+                    <p>बच्चों में जिज्ञासा, वैज्ञानिक सोच और आत्मविश्वास बढ़ाना ताकि सीखना आसान, रोचक और जीवन से जुड़ा हुआ बने।</p>
+                </aside>
+            </section>
+
+            <section id="subjects">
+                <h2 class="section-title">हमारे मुख्य शिक्षण विषय</h2>
+                <div class="grid">
+                    <article class="card">
+                        <h3>विज्ञान</h3>
+                        <p>प्रयोगों, गतिविधियों और रोजमर्रा के उदाहरणों से विज्ञान को समझना।</p>
+                    </article>
+                    <article class="card">
+                        <h3>गणित</h3>
+                        <p>आसान tricks, logic और practice के साथ गणित को सरल बनाना।</p>
+                    </article>
+                    <article class="card">
+                        <h3>सामान्य ज्ञान</h3>
+                        <p>रोचक तथ्य, quiz और उपयोगी जानकारी के माध्यम से जागरूकता बढ़ाना।</p>
+                    </article>
+                </div>
+            </section>
+
+            <section id="projects">
+                <h2 class="section-title">महत्वपूर्ण शैक्षणिक अभियान व प्रकाशन</h2>
+                <ul class="project-list">
+                    <li><strong>NMMSS छात्रवृत्ति:</strong> राष्ट्रीय आय-सह-मेधा छात्रवृत्ति परीक्षा की तैयारी और मार्गदर्शन।</li>
+                    <li><strong>Project Based Learning:</strong> गतिविधि आधारित शिक्षण, मॉडल, प्रयोग और video sessions।</li>
+                    <li><strong>अनुसंधानम्:</strong> नन्हे वैज्ञानिकों को प्रेरित करने वाली विज्ञान पत्रिका।</li>
+                    <li><strong>सुरक्षित शनिवार:</strong> आपदा प्रबंधन, सुरक्षा जागरूकता और जीवन कौशल से जुड़ी साप्ताहिक सामग्री।</li>
+                </ul>
+            </section>
+
+            <section class="links-box" id="connect">
+                <h2>हमसे जुड़ें</h2>
+                <p>Animated videos, learning updates और नई सामग्री के लिए नीचे दिए गए links देखें।</p>
+                <p>YouTube Channel: <a href="https://youtube.com/@prathamprayas4100?si=HjseUWKgn9mjoZEg/" target="_blank" rel="noopener">Subscribe करें</a></p>
+                <p>Facebook Page: <a href="https://www.facebook.com/share/1S1xB3EJQ7/" target="_blank" rel="noopener">Follow करें</a></p>
+            </section>
+        </main>
+
+        <footer>
+            © 2026 Learn With P K PANKAJ. शिक्षा, विज्ञान और सीखने की ओर एक प्रयास।
+        </footer>
     </div>
-
-    <nav class="navbar">
-        <ul>
-            <li><a href="index.html">होम (Home)</a></li>
-            
-            <li class="dropdown">
-                <a href="#" class="dropbtn">मुख्य विषय ▾</a>
-                <div class="dropdown-content">
-                    <a href="#">विज्ञान (Science)</a>
-                    <a href="#">गणित (Mathematics)</a>
-                    <a href="#">सामान्य ज्ञान (GK)</a>
-                </div>
-            </li>
-
-            <li class="dropdown">
-                <a href="#" class="dropbtn">विशेष अभियान ▾</a>
-                <div class="dropdown-content">
-                    <a href="#">NMMSS छात्रवृत्ति</a>
-                    <a href="#">प्रोजेक्ट बेस्ड LEARNING (PBL)</a>
-                </div>
-            </li>
-
-            <li class="dropdown">
-                <a href="#" class="dropbtn">Publication ▾</a>
-                <div class="dropdown-content">
-                    <a href="safesaturday.html">'अनुसंधानम्' साइंस मैगज़ीन</a>
-                    <a href="safesaturday.html">सुरक्षित शनिवार (साक्यता)</a>
-                </div>
-            </li>
-
-            <li class="dropdown">
-                <a href="#" class="dropbtn">News and Event ▾</a>
-                <div class="dropdown-content">
-                    <a href="#">News (ताज़ा खबरें)</a>
-                    <a href="#">Event (स्कूली गतिविधियाँ)</a>
-                    <a href="#">Edu Docs (विभागीय दस्तावेज़)</a>
-                </div>
-            </li>
-
-            <li><a href="admin-panel.html">एडमिन पैनल</a></li>
-        </ul>
-    </nav>
-
-    <div class="main-content">
-        <h1>Learn With P K PANKAJ में आपका स्वागत है</h1>
-        <hr style="width: 80px; border: 2px solid #0d47a1; margin: 15px auto;">
-        <p>यह मंच हमारे सभी सम्मानित शिक्षकों और प्यारे छात्र-छात्राओं के लिए शैक्षणिक सामग्री, सुरक्षित शनिवार की साप्ताहिकी, और विज्ञान पत्रिका 'अनुसंधानम्' को आसानी से प्राप्त करने का एक डिजिटल माध्यम है।</p>
-    </div>
-
 </body>
 </html>
