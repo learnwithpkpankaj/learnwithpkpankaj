@@ -188,11 +188,11 @@
         textarea {
             min-height: 48px;
             resize: vertical;
-      1  }
+        }
 
-        /* --- योग्यता तालिकाओं के लिए विशेष टेक्स्ट-रैप और डेप्थ सेटिंग्स --- */
+        /* --- तालिका के बक्सों के लिए सुधारे गए टेक्स्ट-रैप और क्लीन बॉर्डर सेटिंग्स --- */
         .qual-table, .service-table {
-            table-layout: auto; /* फिक्स्ड लेआउट हटाकर कंटेंट के अनुसार फैलने की अनुमति दी */
+            table-layout: auto;
         }
 
         .qual-table th, .service-table th {
@@ -205,53 +205,35 @@
         }
 
         .qual-table td, .service-table td {
-            height: auto; /* फिक्स्ड हाइट (48px) हटाकर ऑटो किया ताकि डेप्थ बढ़ सके */
+            height: auto;
             padding: 4px;
             vertical-align: top;
         }
 
-        /* इनपुट बॉक्स को मल्टीलाइन टेक्स्ट दिखाने के लिए टेक्स्टएरिया जैसा व्यवहार दिया */
+        /* बक्से की डिफ़ॉल्ट अंडरलाइन हटाकर चारों तरफ हल्का क्लीन बॉर्डर लागू किया गया */
         .qual-table td textarea, .service-table td textarea {
             width: 100%;
             min-height: 36px;
             height: auto;
-            border: 0;
-            border-bottom: 1px solid #666666;
+            border: 1px solid #d1d1d1;
+            border-radius: 4px;
             font-size: 12.5px;
-            line-height: 1.3;
-            padding: 3px;
-            background: transparent;
-            resize: none; /* मैन्युअल रिसाइज़र छिपाया */
-            overflow: hidden; /* स्क्रॉल बार छिपाकर डेप्थ ऑटो की */
+            line-height: 1.4;
+            padding: 6px;
+            background: #fafafa;
+            resize: none;
+            overflow: hidden;
             word-break: break-word;
             white-space: pre-wrap;
+            transition: all 0.2s ease;
         }
 
-       /* योग्यता और सेवा तालिकाओं के लिए बॉक्स स्टाइल (बिना अंडरलाइन) */
-.qual-table td textarea, .service-table td textarea {
-    width: 100%;
-    min-height: 36px;
-    height: auto;
-    border: 1px solid #d1d1d1; /* सिंगल नीचे की लाइन हटाकर चारों तरफ हल्का बॉर्डर दिया */
-    border-radius: 4px; /* कोनों को थोड़ा घुमावदार बनाया */
-    font-size: 12.5px;
-    line-height: 1.4;
-    padding: 6px;
-    background: #fafafa; /* बॉक्स के अंदर का बैकग्राउंड हल्का ग्रे किया ताकि वह अलग दिखे */
-    resize: none;
-    overflow: hidden;
-    word-break: break-word;
-    white-space: pre-wrap;
-    transition: all 0.2s ease;
-}
-
-/* बॉक्स पर क्लिक (Focus) करने पर स्टाइल */
-.qual-table td textarea:focus, .service-table td textarea:focus {
-    background-color: var(--input-focus);
-    border: 1px solid var(--primary); /* फोकस होने पर बॉर्डर का रंग प्राइमरी ब्लू हो जाएगा */
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-    outline: none;
-}
+        /* टाइपिंग करते समय (Focus होने पर) बक्से का रंग बदलेगा */
+        .qual-table td textarea:focus, .service-table td textarea:focus {
+            background-color: var(--input-focus);
+            border: 1px solid var(--primary);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            outline: none;
         }
 
         .check-row {
@@ -371,6 +353,12 @@
             input[type="email"],
             textarea {
                 border-bottom: 1px solid #000000;
+            }
+
+            /* प्रिंट के समय बक्से का बॉर्डर और बैकग्राउंड अनुकूलित रखना */
+            .qual-table td textarea, .service-table td textarea {
+                border: 1px solid #a0a0a0;
+                background: transparent;
             }
         }
     </style>
