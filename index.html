@@ -21,6 +21,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
             font-family: "Segoe UI", "Noto Sans Devanagari", Arial, sans-serif;
@@ -89,6 +93,7 @@
             padding: 14px 18px;
             font-weight: 700;
             font-size: 15px;
+            transition: background 0.2s ease, color 0.2s ease;
         }
 
         .navbar a:hover,
@@ -179,6 +184,7 @@
             padding: 11px 16px;
             font-weight: 700;
             border: 1px solid var(--primary);
+            transition: all 0.2s ease;
         }
 
         .btn-primary {
@@ -186,9 +192,18 @@
             color: #ffffff;
         }
 
+        .btn-primary:hover {
+            background: var(--primary-light);
+            box-shadow: 0 4px 12px rgba(13, 71, 161, 0.2);
+        }
+
         .btn-secondary {
             background: #ffffff;
             color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--soft);
         }
 
         .section-title {
@@ -335,7 +350,7 @@
                     <div class="dropdown-content">
                         <a href="#projects">NMMSS छात्रवृत्ति</a>
                         <a href="#projects">Project Based Learning (PBL)</a>
-                        <a href="teacher-form.html">शिक्षक ऑफलाइन फॉर्म</a>
+                        <a href="dcf-form.html">शिक्षक ऑफलाइन DCF फॉर्म</a>
                     </div>
                 </li>
                 <li class="dropdown">
@@ -357,7 +372,7 @@
                     <p>यहां कक्षा 1 से 10 तक के विद्यार्थियों के लिए सरल भाषा में ज्ञानवर्धक सामग्री, विज्ञान प्रयोग, स्कूल गतिविधियां, सुरक्षा जागरूकता और प्रतियोगी तैयारी से जुड़ी जानकारी उपलब्ध कराई जाती है।</p>
                     <div class="cta-row">
                         <a class="btn btn-primary" href="safesaturday.html">सुरक्षित शनिवार देखें</a>
-                        <a class="btn btn-secondary" href="teacher-form.html">शिक्षक फॉर्म भरें</a>
+                        <a class="btn btn-secondary" href="dcf-form.html">DCF फॉर्म भरें</a>
                         <a class="btn btn-secondary" href="#connect">YouTube / Facebook</a>
                     </div>
                 </div>
@@ -392,15 +407,15 @@
                     <li><strong>Project Based Learning:</strong> गतिविधि आधारित शिक्षण, मॉडल, प्रयोग और video sessions।</li>
                     <li><strong>अनुसंधानम्:</strong> नन्हे वैज्ञानिकों को प्रेरित करने वाली विज्ञान पत्रिका।</li>
                     <li><strong>सुरक्षित शनिवार:</strong> आपदा प्रबंधन, सुरक्षा जागरूकता और जीवन कौशल से जुड़ी साप्ताहिक सामग्री।</li>
-                    <li><strong>शिक्षक ऑफलाइन फॉर्म:</strong> शिक्षक अपनी जानकारी भरकर PDF save या print कर सकते हैं।</li>
+                    <li><strong>शिक्षक ऑफलाइन DCF फॉर्म:</strong> शिक्षक अपनी जानकारी भरकर PDF save या print कर सकते हैं।</li>
                 </ul>
             </section>
 
             <section class="links-box" id="connect">
                 <h2>हमसे जुड़ें</h2>
-                <p>Animated videos, learning updates और नई सामग्री के लिए नीचे दिए गए links देखें।</p>
-                <p>YouTube Channel: <a href="https://youtube.com/@prathamprayas4100?si=HjseUWKgn9mjoZEg/" target="_blank" rel="noopener">Subscribe करें</a></p>
-                <p>Facebook Page: <a href="https://www.facebook.com/share/1S1xB3EJQ7/" target="_blank" rel="noopener">Follow करें</a></p>
+                <p>Animated videos, learning updates und नई सामग्री के लिए नीचे दिए गए links देखें।</p>
+                <p>YouTube Channel: <a href="https://youtube.com/@prathamprayas4100?si=HjseUWKgn9mjoZEg/" target="_blank" rel="noopener noreferrer">Subscribe करें</a></p>
+                <p>Facebook Page: <a href="https://www.facebook.com/share/1S1xB3EJQ7/" target="_blank" rel="noopener noreferrer">Follow करें</a></p>
             </section>
         </main>
 
