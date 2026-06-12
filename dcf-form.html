@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>शिक्षक ऑफलाइन DCF फॉर्म - Learn With P K PANKAJ</title>
+    <style>
+        body {
+            font-family: "Segoe UI", "Noto Sans Devanagari", Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+            margin: 0;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid #0d47a1;
+        }
+        h1 {
+            color: #0d47a1;
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 26px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #5b6472;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+        input[type="text"], input[type="email"], input[type="tel"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d8e2f0;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .btn-box {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .btn {
+            background: #0d47a1;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background: #1565c0;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #0d47a1;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .form-container { box-shadow: none; border: none; padding: 0; }
+            .btn, .back-link { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h1>शिक्षक ऑफलाइन DCF फॉर्म</h1>
+    <p class="subtitle">जानकारी भरें और प्रिंट या PDF सेव करने के लिए नीचे बटन दबाएं</p>
+    
+    <form>
+        <div class="form-group">
+            <label for="teacher-name">शिक्षक का नाम:</label>
+            <input type="text" id="teacher-name" placeholder="यहाँ अपना नाम लिखें">
+        </div>
+
+        <div class="form-group">
+            <label for="school-name">विद्यालय का नाम:</label>
+            <input type="text" id="school-name" placeholder="विद्यालय का नाम दर्ज करें">
+        </div>
+
+        <div class="form-group">
+            <label for="dise-code">UDISE कोड:</label>
+            <input type="text" id="dise-code" placeholder="11 अंकों का यू-डाइस कोड">
+        </div>
+
+        <div class="form-group">
+            <label for="block">प्रखंड (Block):</label>
+            <input type="text" id="block" placeholder="प्रखंड का नाम">
+        </div>
+
+        <div class="form-group">
+            <label for="district">जिला:</label>
+            <input type="text" id="district" placeholder="जिले का नाम">
+        </div>
+
+        <div class="form-group">
+            <label for="mobile">मोबाइल नंबर:</label>
+            <input type="tel" id="mobile" placeholder="अपना मोबाइल नंबर लिखें">
+        </div>
+
+        <div class="btn-box">
+            <button type="button" class="btn" onclick="window.print()">Print / Save as PDF</button>
+        </div>
+    </form>
+
+    <a href="index.html" class="back-link">← मुख्य होमपेज पर वापस जाएं</a>
+</div>
+
+</body>
+</html>
