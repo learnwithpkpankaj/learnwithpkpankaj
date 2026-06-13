@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shikshakosh DCF Teacher Registration</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap');
+        body { font-family: 'Noto Sans Devanagari', sans-serif; }
+        /* Hidden printable area for clean PDF styling */
+        #pdf-template { display: none; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-8">
+        <div class="text-center border-b pb-6 mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold text-blue-800">E-Shikshakosh DCF For Teacher</h1>
+            <p class="text-gray-600 mt-2 text-sm md:text-base">अपना विवरण भरें और सीधे अपने फोन में पीडीएफ डाउनलोड करें (आपका डेटा सुरक्षित है)</p>
+        </div>
+
+        <form id="dcfForm" class="space-y-8">
+            
+            <div>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 border-l-4 border-blue-600 pl-2">1. व्यक्तिगत और सेवा विवरण (Personal & Service Details)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">1. Prefix *</label>
+                        <select id="f1" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="Mr.">Mr.</option>
+                            <option value="Mrs.">Mrs.</option>
+                            <option value="Ms.">Ms.</option>
+                            <option value="Dr.">Dr.</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">2. First Name *</label>
+                        <input type="text" id="f2" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">3. Middle Name</label>
+                        <input type="text" id="f3" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">4. Last Name</label>
+                        <input type="text" id="f4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">5. Gender *</label>
+                        <select id="f5" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">6. Date of Birth *</label>
+                        <input type="date" id="f6" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">7. Social Category *</label>
+                        <input type="text" id="f7" required placeholder="General/OBC/EBC/SC/ST" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">8. Religion *</label>
+                        <input type="text" id="f8" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">9. Mobile Number (+91) *</label>
+                        <input type="tel" id="f9" pattern="[0-9]{10}" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">10. Aadhaar Number *</label>
+                        <input type="text" id="f10" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">11. Nature of Appointment *</label>
+                        <input type="text" id="f11" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">12. Type of Teacher *</label>
+                        <input type="text" id="f12" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">13. Type of Sub Teacher</label>
+                        <input type="text" id="f13" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">14. Class Category *</label>
+                        <input type="text" id="f14" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">15. Appointed Subject *</label>
+                        <input type="text" id="f15" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">16. Date of joining in service *</label>
+                        <input type="date" id="f16" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">17. District of First Joining *</label>
+                        <input type="text" id="f17" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">18. GPF NUMBER *</label>
+                        <input type="text" id="f18" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">19. UAN NUMBER *</label>
+                        <input type="text" id="f19" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">20. PRAN Number *</label>
+                        <input type="text" id="f20" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 border-l-4 border-green-600 pl-2">2. पदस्थापन विवरण (Posting Details)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">21. District *</label>
+                        <input type="text" id="f21" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">22. Block</label>
+                        <input type="text" id="f22" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">23. Cluster/CRC *</label>
+                        <input type="text" id="f23" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">24. School *</label>
+                        <input type="text" id="f24" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">25. Appointment for level *</label>
+                        <input type="text" id="f25" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">26. Appointing Authority *</label>
+                        <input type="text" id="f26" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">27. Date of Joining Current School *</label>
+                        <input type="date" id="f27" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 border-l-4 border-purple-600 pl-2">3. पारिवारिक एवं अन्य व्यक्तिगत जानकारी</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">28. Personal PAN Number *</label>
+                        <input type="text" id="f28" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">29. Father Name *</label>
+                        <input type="text" id="f29" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">30. Mother Name *</label>
+                        <input type="text" id="f30" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">31. Marital Status *</label>
+                        <select id="f31" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                            <option value="Married">Married</option>
+                            <option value="Unmarried">Unmarried</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">32. Email ID *</label>
+                        <input type="email" id="f32" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">33. Spouse Name (यदि लागू हो)</label>
+                        <input type="text" id="f33" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">34. Blood Group *</label>
+                        <input type="text" id="f34" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">35. Appointment Category *</label>
+                        <input type="text" id="f35" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">36. Whether Disabled? *</label>
+                        <select id="f36" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">37. Whether Awarded? *</label>
+                        <select id="f37" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 border-l-4 border-amber-600 pl-2">4. स्थायी पता (Permanent Address)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">38. House Number/Name</label>
+                        <input type="text" id="f38" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">39. Street/Mohalla/Sector</label>
+                        <input type="text" id="f39" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">40. Panchayat *</label>
+                        <input type="text" id="f40" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">41. Post Office *</label>
+                        <input type="text" id="f41" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">42. Village/Area/Town *</label>
+                        <input type="text" id="f42" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">43. Block</label>
+                        <input type="text" id="f43" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">44. District *</label>
+                        <input type="text" id="f44" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">45. PIN Code *</label>
+                        <input type="text" id="f45" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">46. State *</label>
+                        <input type="text" id="f46" required value="Bihar" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">47. Domicile Cert. Submitted? *</label>
+                        <select id="f47" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">48. Domicile Certificate No. *</label>
+                        <input type="text" id="f48" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">49. Copy Submitted? *</label>
+                        <select id="f49" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex justify-between items-center mb-4 border-l-4 border-teal-600 pl-2">
+                    <h2 class="text-xl font-bold text-gray-800">5. वर्तमान पता (Current Address)</h2>
+                    <button type="button" onclick="copyPermanentAddress()" class="text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-1 rounded">स्थायी पता कॉपी करें</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div><label class="block text-sm font-medium text-gray-700">50. House Number/Name</label><input type="text" id="f50" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"></div>
+                    <div><label class="block text-sm font-medium text-gray-700">51. Street/Mohalla/Sector</label><input type="text" id="f51" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"></div>
+                    <div><label class="block text-sm font-medium text-gray-700">52. Panchayat *</label><input type="text" id="f52" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"></div>
+                    <div><label class="block text-sm font-medium text-gray-700">53. Post Office *</label><input type="text" id="f53" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"></div>
+                    <div><label class="block text-sm font-medium text-gray-700">54. Village/Area/Town *</label><input type="text" id="f54" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"></div>
+                    <div><label class="block text-sm font-medium text-gray-700">55. Block</label><input type="text" id="f55" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"></div>
+                    <div><label class="block text-sm font-medium text-gray-700">56. Distri
