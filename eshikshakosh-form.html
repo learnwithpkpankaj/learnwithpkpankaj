@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Shikshakosh DCF Teacher Registration</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- html2pdf.js लाइब्रेरी -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap');
@@ -30,7 +28,6 @@
 
     <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-xl p-4 md:p-8" id="form-container">
         
-        <!-- हेडर और डाउनलोड बटन (ऊपर राइट साइड में व्यवस्थित) -->
         <div class="flex flex-col md:flex-row justify-between items-center border-b pb-6 mb-6 gap-4">
             <div class="text-center md:text-left">
                 <h1 class="text-2xl md:text-3xl font-bold text-blue-800">E-Shikshakosh DCF For Teacher</h1>
@@ -55,7 +52,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- 1. व्यक्तिगत और सेवा विवरण -->
                         <tr class="section-header"><td colspan="3">1. व्यक्तिगत और सेवा विवरण (Personal & Service Details)</td></tr>
                         <tr>
                             <td class="text-center">1</td>
@@ -171,7 +167,6 @@
                             <td><input type="text" id="f20" required class="w-full p-1.5 border border-gray-300 rounded"></td>
                         </tr>
 
-                        <!-- 2. पदस्थापन विवरण -->
                         <tr class="section-header"><td colspan="3">2. पदस्थापन विवरण (Posting Details)</td></tr>
                         <tr>
                             <td class="text-center">21</td>
@@ -209,7 +204,6 @@
                             <td><input type="date" id="f27" required class="w-full p-1.5 border border-gray-300 rounded"></td>
                         </tr>
 
-                        <!-- 3. पारिवारिक एवं व्यक्तिगत जानकारी -->
                         <tr class="section-header"><td colspan="3">3. पारिवारिक एवं व्यक्तिगत जानकारी (Personal Information)</td></tr>
                         <tr>
                             <td class="text-center">28</td>
@@ -277,7 +271,6 @@
                             </td>
                         </tr>
 
-                        <!-- 4. स्थायी पता -->
                         <tr class="section-header"><td colspan="3">4. स्थायी पता (Permanent Address)</td></tr>
                         <tr>
                             <td class="text-center">38</td>
@@ -326,7 +319,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">47</td>
-                            <td><label for="f47" class="font-medium">Domicile Certificate Submitted at the time of Appointment*</label></td>
+                            <td><label for="f47" class="font-medium">Domicile Certificate Submitted at the time of Appointment *</label></td>
                             <td>
                                 <select id="f47" required class="w-full p-1.5 border border-gray-300 rounded">
                                     <option value="Yes">Yes</option>
@@ -341,7 +334,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">49</td>
-                            <td><label for="f49" class="font-medium">Copy of Domicile Certificate*</label></td>
+                            <td><label for="f49" class="font-medium">Copy of Domicile Certificate *</label></td>
                             <td>
                                 <select id="f49" required class="w-full p-1.5 border border-gray-300 rounded">
                                     <option value="Yes">Yes</option>
@@ -350,7 +343,6 @@
                             </td>
                         </tr>
 
-                        <!-- 5. वर्तमान पता -->
                         <tr class="section-header">
                             <td colspan="3">
                                 <div class="flex justify-between items-center px-2">
@@ -421,7 +413,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">61</td>
-                            <td><label for="f61" class="font-medium">Copy of Domicile Certificate*</label></td>
+                            <td><label for="f61" class="font-medium">Copy of Domicile Certificate *</label></td>
                             <td>
                                 <select id="f61" class="w-full p-1.5 border border-gray-300 rounded">
                                     <option value="Yes">Yes</option>
@@ -433,7 +425,6 @@
                 </table>
             </div>
 
-            <!-- नीचे दिया गया सबमिट और सेव बटन -->
             <div class="pt-4 flex justify-end">
                 <button type="button" onclick="generatePDF()" class="w-full md:w-auto bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-200 cursor-pointer text-base">
                     विवरण सहेजें और PDF डाउनलोड करें
@@ -442,7 +433,6 @@
         </form>
     </div>
 
-    <!-- जावास्क्रिप्ट लॉजिक -->
     <script>
         // स्थायी पता कॉपी करने का फ़ंक्शन
         function copyPermanentAddress() {
@@ -452,7 +442,11 @@
                 'f46': 'f58', 'f47': 'f59', 'f48': 'f60', 'f49': 'f61'
             };
             for (let src in fieldMap) {
-                document.getElementById(fieldMap[src]).value = document.getElementById(src).value;
+                const srcEl = document.getElementById(src);
+                const targetEl = document.getElementById(fieldMap[src]);
+                if (srcEl && targetEl) {
+                    targetEl.value = srcEl.value;
+                }
             }
         }
 
@@ -476,15 +470,16 @@
             const bottomBtn = clone.querySelector('.pt-4');
             if (bottomBtn) bottomBtn.remove();
 
+            // वर्तमान पते के अंतर्गत बने "स्थायी पता कॉपी करें" वाले इनर बटन को भी क्लोन से हटाएँ
+            const copyBtn = clone.querySelector('button[onclick="copyPermanentAddress()"]');
+            if (copyBtn) copyBtn.remove();
+
             // क्लोन की टेबल के अंदर इनपुट बॉक्स और ड्रॉपडाउन की जगह शुद्ध टेक्स्ट रिप्लेस करें
             const inputs = originalContainer.querySelectorAll('input, select');
             const cloneInputs = clone.querySelectorAll('input, select');
 
             inputs.forEach((input, index) => {
                 let value = input.value || '-';
-                
-                // आधार मास्किंग का पुराना लॉजिक पूरी तरह हटा दिया गया है। 
-                // अब यूज़र द्वारा टाइप किया गया पूरा नंबर हुबहू प्रिंट होगा।
 
                 const textSpan = document.createElement('span');
                 textSpan.innerText = value;
@@ -499,13 +494,14 @@
             const firstName = document.getElementById('f2').value || 'Teacher';
             const lastName = document.getElementById('f4').value || 'Registration';
 
-            // html2pdf कॉन्फ़िगरेशन ऑप्शन्स
+            // html2pdf कॉन्फ़िगरेशन ऑप्शन्स (Page-Break हैंडलिंग के साथ)
             const opt = {
-                margin:       [10, 10, 10, 10],
+                margin:       [12, 12, 12, 12],
                 filename:     `E-Shikshakosh_DCF_${firstName}_${lastName}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, useCORS: true },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:    { mode: ['avoid-all', 'css'] }
             };
 
             // PDF जनरेट करें
