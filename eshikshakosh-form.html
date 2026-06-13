@@ -3,430 +3,562 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Shikshakosh DCF Teacher Registration</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>E-Shikshakosh DCF For Teacher</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap');
-        body { font-family: 'Noto Sans Devanagari', sans-serif; }
         
-        /* प्रिंट/PDF के लिए विशेष टेबल स्टाइल */
-        .pdf-table th, .pdf-table td {
-            border: 1px solid #cbd5e1;
-            padding: 8px 12px;
-            font-size: 13px;
+        body { 
+            font-family: 'Segoe UI', 'Noto Sans Devanagari', sans-serif; 
+            background-color: #f4f7fb; 
+            margin: 0; 
+            padding: 20px;
         }
-        .section-header {
-            background-color: #1e40af;
+        
+        .container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            background: #ffffff; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        /* हेडर और शीर्ष बटन का लेआउट */
+        .header-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #0d47a1;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .header-title h1 {
+            margin: 0;
+            color: #0d47a1;
+            font-size: 26px;
+        }
+        .header-title p {
+            margin: 5px 0 0 0;
+            color: #5b6472;
+            font-size: 14px;
+        }
+
+        /* बटन स्टाइल्स */
+        .btn-save-top {
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn-save-top:hover { background-color: #15803d; }
+
+        .btn-save-bottom {
+            background-color: #0d47a1;
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            float: right;
+        }
+        .btn-save-bottom:hover { background-color: #1565c0; }
+
+        /* हूबहू PDF जैसी मुख्य 3-कॉलम टेबल संरचना */
+        .dcf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .dcf-table th, .dcf-table td {
+            border: 1px solid #cbd5e1;
+            padding: 10px 12px;
+            font-size: 14px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        .dcf-table th {
+            background-color: #e2e8f0;
+            color: #1f2937;
+            font-weight: bold;
+        }
+        .col-si { width: 8%; text-align: center; }
+        .col-info { width: 46%; font-weight: 500; }
+        .col-fill { width: 46%; }
+
+        /* सेक्शन सेपरेटर रो */
+        .section-row {
+            background-color: #0d47a1;
             color: white;
             font-weight: bold;
+            font-size: 15px;
             text-align: center;
+        }
+        .section-row td {
+            color: white;
+            text-align: center;
+            padding: 8px;
+            background-color: #0d47a1;
+        }
+        .section-row-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        /* इनपुट बॉक्स फ़ॉर्मेटिंग */
+        .dcf-table input[type="text"],
+        .dcf-table input[type="date"],
+        .dcf-table input[type="tel"],
+        .dcf-table input[type="email"],
+        .dcf-table select {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        
+        .btn-copy {
+            background-color: #fbc02d;
+            color: #1f2937;
+            border: none;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-copy:hover { background-color: #f9a825; }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen p-3 md:p-8">
+<body>
 
-    <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-xl p-4 md:p-8" id="form-container">
+    <div class="container" id="form-container">
         
-        <div class="flex flex-col md:flex-row justify-between items-center border-b pb-6 mb-6 gap-4">
-            <div class="text-center md:text-left">
-                <h1 class="text-2xl md:text-3xl font-bold text-blue-800">E-Shikshakosh DCF For Teacher</h1>
-                <p class="text-gray-600 mt-1 text-sm">अपना विवरण भरें और सीधे अपने फोन में पीडीएफ डाउनलोड करें (कार्यालय में जमा करने हेतु आधार नंबर अनमास्क रहेगा)</p>
+        <div class="header-area">
+            <div class="header-title">
+                <h1>E-Shikshakosh DCF For Teacher</h1>
+                <p>विवरण भरें और सीधे पीडीएफ डाउनलोड करें (जमा करने हेतु आधार नंबर अनमास्क रहेगा)</p>
             </div>
             <div>
-                <button type="button" onclick="generatePDF()" class="inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-lg shadow-md transition duration-200 cursor-pointer text-sm whitespace-nowrap block">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <button type="button" onclick="generatePDF()" class="btn-save-top">
+                    <svg style="width:16px; height:16px; margin-right:8px; fill:currentColor;" viewBox="0 0 24 24"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/></svg>
                     Save PDF (डाउनलोड करें)
                 </button>
             </div>
         </div>
 
-        <form id="dcfForm" class="space-y-6">
-            <div class="overflow-x-auto">
-                <table class="w-full pdf-table border-collapse border border-slate-300">
-                    <thead>
-                        <tr class="bg-slate-200 text-slate-700 font-bold">
-                            <th class="w-16 text-center">SI No.</th>
-                            <th class="w-1/2 text-left">Required Registration Information</th>
-                            <th class="w-1/2 text-left">Fill Required Information</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="section-header"><td colspan="3">1. व्यक्तिगत और सेवा विवरण (Personal & Service Details)</td></tr>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td><label for="f1" class="font-medium">Prefix *</label></td>
-                            <td>
-                                <select id="f1" required class="w-full p-1.5 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500">
-                                    <option value="Mr.">Mr.</option>
-                                    <option value="Mrs.">Mrs.</option>
-                                    <option value="Ms.">Ms.</option>
-                                    <option value="Dr.">Dr.</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">2</td>
-                            <td><label for="f2" class="font-medium">First Name *</label></td>
-                            <td><input type="text" id="f2" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">3</td>
-                            <td><label for="f3" class="font-medium">Middle Name</label></td>
-                            <td><input type="text" id="f3" class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">4</td>
-                            <td><label for="f4" class="font-medium">Last Name</label></td>
-                            <td><input type="text" id="f4" class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">5</td>
-                            <td><label for="f5" class="font-medium">Gender *</label></td>
-                            <td>
-                                <select id="f5" required class="w-full p-1.5 border border-gray-300 rounded">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">6</td>
-                            <td><label for="f6" class="font-medium">Date of Birth *</label></td>
-                            <td><input type="date" id="f6" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">7</td>
-                            <td><label for="f7" class="font-medium">Social Category *</label></td>
-                            <td><input type="text" id="f7" placeholder="General/OBC/EBC/SC/ST" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">8</td>
-                            <td><label for="f8" class="font-medium">Religion *</label></td>
-                            <td><input type="text" id="f8" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">9</td>
-                            <td><label for="f9" class="font-medium">Mobile Number (+91) *</label></td>
-                            <td><input type="tel" id="f9" pattern="[0-9]{10}" placeholder="10 अंकों का मोबाइल नंबर" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">10</td>
-                            <td><label for="f10" class="font-medium">Aadhaar Number *</label></td>
-                            <td><input type="text" id="f10" placeholder="12 अंकों का आधार नंबर" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">11</td>
-                            <td><label for="f11" class="font-medium">Nature of Appointment *</label></td>
-                            <td><input type="text" id="f11" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">12</td>
-                            <td><label for="f12" class="font-medium">Type of Teacher *</label></td>
-                            <td><input type="text" id="f12" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">13</td>
-                            <td><label for="f13" class="font-medium">Type of Sub Teacher</label></td>
-                            <td><input type="text" id="f13" class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">14</td>
-                            <td><label for="f14" class="font-medium">Class Category *</label></td>
-                            <td><input type="text" id="f14" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">15</td>
-                            <td><label for="f15" class="font-medium">Appointed Subject *</label></td>
-                            <td><input type="text" id="f15" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">16</td>
-                            <td><label for="f16" class="font-medium">Date of joining in service *</label></td>
-                            <td><input type="date" id="f16" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">17</td>
-                            <td><label for="f17" class="font-medium">District of First Joining *</label></td>
-                            <td><input type="text" id="f17" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">18</td>
-                            <td><label for="f18" class="font-medium">GPF NUMBER *</label></td>
-                            <td><input type="text" id="f18" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">19</td>
-                            <td><label for="f19" class="font-medium">UAN NUMBER *</label></td>
-                            <td><input type="text" id="f19" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">20</td>
-                            <td><label for="f20" class="font-medium">PRAN Number *</label></td>
-                            <td><input type="text" id="f20" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
+        <form id="dcfForm">
+            <table class="dcf-table">
+                <thead>
+                    <tr>
+                        <th class="col-si">SI No.</th>
+                        <th class="col-info">Required Registration Information</th>
+                        <th class="col-fill">Fill Required Information</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="section-header section-row">
+                        <td colspan="3">1. व्यक्तिगत और सेवा विवरण (Personal & Service Details)</td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">1</td>
+                        <td class="col-info">Prefix:- [cite: 2]</td>
+                        <td class="col-fill">
+                            <select id="f1" required>
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Ms.">Ms.</option>
+                                <option value="Dr.">Dr.</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">2</td>
+                        <td class="col-info">First Name*:- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f2" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">3</td>
+                        <td class="col-info">Middle Name:- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f3"></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">4</td>
+                        <td class="col-info">Last Name:- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f4"></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">5</td>
+                        <td class="col-info">Gender* :- [cite: 2]</td>
+                        <td class="col-fill">
+                            <select id="f5" required>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">6</td>
+                        <td class="col-info">Date of Birth* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="date" id="f6" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">7</td>
+                        <td class="col-info">Social Category* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f7" placeholder="General/OBC/EBC/SC/ST" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">8</td>
+                        <td class="col-info">Religion* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f8" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">9</td>
+                        <td class="col-info">Mobile Number (+91)* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="tel" id="f9" pattern="[0-9]{10}" placeholder="10 अंकों का नंबर" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">10</td>
+                        <td class="col-info">Aadhaar Number* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f10" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">11</td>
+                        <td class="col-info">Nature of Appointment* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f11" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">12</td>
+                        <td class="col-info">Type of Teacher* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f12" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">13</td>
+                        <td class="col-info">Type of Sub Teacher :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f13"></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">14</td>
+                        <td class="col-info">Class Category*:- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f14" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">15</td>
+                        <td class="col-info">Appointed Subject* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f15" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">16</td>
+                        <td class="col-info">Date of joining in service*:- [cite: 2]</td>
+                        <td class="col-fill"><input type="date" id="f16" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">17</td>
+                        <td class="col-info">District of First Joining* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f17" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">18</td>
+                        <td class="col-info">GPF NUMBER* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f18" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">19</td>
+                        <td class="col-info">UAN NUMBER* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f19" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">20</td>
+                        <td class="col-info">PRAN Number * :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f20" required></td>
+                    </tr>
 
-                        <tr class="section-header"><td colspan="3">2. पदस्थापन विवरण (Posting Details)</td></tr>
-                        <tr>
-                            <td class="text-center">21</td>
-                            <td><label for="f21" class="font-medium">District *</label></td>
-                            <td><input type="text" id="f21" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">22</td>
-                            <td><label for="f22" class="font-medium">Block</label></td>
-                            <td><input type="text" id="f22" class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">23</td>
-                            <td><label for="f23" class="font-medium">Cluster/Complex resource center *</label></td>
-                            <td><input type="text" id="f23" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">24</td>
-                            <td><label for="f24" class="font-medium">School *</label></td>
-                            <td><input type="text" id="f24" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">25</td>
-                            <td><label for="f25" class="font-medium">Appointment for level *</label></td>
-                            <td><input type="text" id="f25" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">26</td>
-                            <td><label for="f26" class="font-medium">Appointing Authority *</label></td>
-                            <td><input type="text" id="f26" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">27</td>
-                            <td><label for="f27" class="font-medium">Date of Joining of the Current school *</label></td>
-                            <td><input type="date" id="f27" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
+                    <tr class="section-row">
+                        <td colspan="3">Posting Details [cite: 2]</td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">21</td>
+                        <td class="col-info">District* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f21" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">22</td>
+                        <td class="col-info">Block :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f22"></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">23</td>
+                        <td class="col-info">Cluster/Complex resource center* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f23" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">24</td>
+                        <td class="col-info">School* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f24" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">25</td>
+                        <td class="col-info">Appointment for level* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f25" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">26</td>
+                        <td class="col-info">Appointing Authority* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f26" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">27</td>
+                        <td class="col-info">Date of Joining of the Current school*:- [cite: 2]</td>
+                        <td class="col-fill"><input type="date" id="f27" required></td>
+                    </tr>
 
-                        <tr class="section-header"><td colspan="3">3. पारिवारिक एवं व्यक्तिगत जानकारी (Personal Information)</td></tr>
-                        <tr>
-                            <td class="text-center">28</td>
-                            <td><label for="f28" class="font-medium">Personal PAN Number *</label></td>
-                            <td><input type="text" id="f28" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">29</td>
-                            <td><label for="f29" class="font-medium">Father Name *</label></td>
-                            <td><input type="text" id="f29" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">30</td>
-                            <td><label for="f30" class="font-medium">Mother Name *</label></td>
-                            <td><input type="text" id="f30" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">31</td>
-                            <td><label for="f31" class="font-medium">Marital Status *</label></td>
-                            <td>
-                                <select id="f31" required class="w-full p-1.5 border border-gray-300 rounded">
-                                    <option value="Married">Married</option>
-                                    <option value="Unmarried">Unmarried</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">32</td>
-                            <td><label for="f32" class="font-medium">Email ID *</label></td>
-                            <td><input type="email" id="f32" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">33</td>
-                            <td><label for="f33" class="font-medium">Spouse Name * (यदि लागू हो)</label></td>
-                            <td><input type="text" id="f33" class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">34</td>
-                            <td><label for="f34" class="font-medium">Blood Group *</label></td>
-                            <td><input type="text" id="f34" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">35</td>
-                            <td><label for="f35" class="font-medium">Appointment Category *</label></td>
-                            <td><input type="text" id="f35" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">36</td>
-                            <td><label for="f36" class="font-medium">Whether Disabled ? *</label></td>
-                            <td>
-                                <select id="f36" required class="w-full p-1.5 border border-gray-300 rounded">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">37</td>
-                            <td><label for="f37" class="font-medium">Whether Awarded ? *</label></td>
-                            <td>
-                                <select id="f37" required class="w-full p-1.5 border border-gray-300 rounded">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                </select>
-                            </td>
-                        </tr>
+                    <tr class="section-row">
+                        <td colspan="3">Personal Information [cite: 2, 4]</td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">28</td>
+                        <td class="col-info">Personal PAN Number* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f28" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">29</td>
+                        <td class="col-info">Father Name* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f29" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">30</td>
+                        <td class="col-info">Mother Name* :- [cite: 2]</td>
+                        <td class="col-fill"><input type="text" id="f30" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">31</td>
+                        <td class="col-info">Marital Status* :- [cite: 2]</td>
+                        <td class="col-fill">
+                            <select id="f31" required>
+                                <option value="Married">Married</option>
+                                <option value="Unmarried">Unmarried</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">32</td>
+                        <td class="col-info">Email ID* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="email" id="f32" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">33</td>
+                        <td class="col-info">Spouse Name* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f33"></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">34</td>
+                        <td class="col-info">Blood Group* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f34" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">35</td>
+                        <td class="col-info">Appointment Category* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f35" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">36</td>
+                        <td class="col-info">Whether Disabled ?* :- [cite: 4]</td>
+                        <td class="col-fill">
+                            <select id="f36" required>
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">37</td>
+                        <td class="col-info">Whether Awarded ?* :- [cite: 4]</td>
+                        <td class="col-fill">
+                            <select id="f37" required>
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </td>
+                    </tr>
 
-                        <tr class="section-header"><td colspan="3">4. स्थायी पता (Permanent Address)</td></tr>
-                        <tr>
-                            <td class="text-center">38</td>
-                            <td><label for="f38" class="font-medium">House Number/Name</label></td>
-                            <td><input type="text" id="f38" class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">39</td>
-                            <td><label for="f39" class="font-medium">Street/Mohalla/Sector</label></td>
-                            <td><input type="text" id="f39" class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">40</td>
-                            <td><label for="f40" class="font-medium">Panchayat *</label></td>
-                            <td><input type="text" id="f40" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">41</td>
-                            <td><label for="f41" class="font-medium">Post Office *</label></td>
-                            <td><input type="text" id="f41" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">42</td>
-                            <td><label for="f42" class="font-medium">Village/Area/Town *</label></td>
-                            <td><input type="text" id="f42" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">43</td>
-                            <td><label for="f43" class="font-medium">Block</label></td>
-                            <td><input type="text" id="f43" class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">44</td>
-                            <td><label for="f44" class="font-medium">District *</label></td>
-                            <td><input type="text" id="f44" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">45</td>
-                            <td><label for="f45" class="font-medium">PIN Code *</label></td>
-                            <td><input type="text" id="f45" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">46</td>
-                            <td><label for="f46" class="font-medium">State *</label></td>
-                            <td><input type="text" id="f46" value="Bihar" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">47</td>
-                            <td><label for="f47" class="font-medium">Domicile Certificate Submitted at the time of Appointment *</label></td>
-                            <td>
-                                <select id="f47" required class="w-full p-1.5 border border-gray-300 rounded">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">48</td>
-                            <td><label for="f48" class="font-medium">Domicile Certificate No. *</label></td>
-                            <td><input type="text" id="f48" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">49</td>
-                            <td><label for="f49" class="font-medium">Copy of Domicile Certificate *</label></td>
-                            <td>
-                                <select id="f49" required class="w-full p-1.5 border border-gray-300 rounded">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </td>
-                        </tr>
+                    <tr class="section-row">
+                        <td colspan="3">Permanent Address [cite: 4]</td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">38</td>
+                        <td class="col-info">House Number/Name :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f38"></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">39</td>
+                        <td class="col-info">Street/Mohalla/Sector:- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f39"></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">40</td>
+                        <td class="col-info">Panchayat* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f40" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">41</td>
+                        <td class="col-info">Post Office* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f41" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">42</td>
+                        <td class="col-info">Village/Area/Town* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f42" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">43</td>
+                        <td class="col-info">Block :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f43"></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">44</td>
+                        <td class="col-info">District* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f44" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">45</td>
+                        <td class="col-info">PIN Code* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f45" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">46</td>
+                        <td class="col-info">State*:- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f46" value="Bihar" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">47</td>
+                        <td class="col-info">Domicile Certificate Submitted at the time of Appointment* [cite: 4]</td>
+                        <td class="col-fill">
+                            <select id="f47" required>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">48</td>
+                        <td class="col-info">Domicile Certificate No. * :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f48" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">49</td>
+                        <td class="col-info">Copy of Domicile Certificate* :- [cite: 4]</td>
+                        <td class="col-fill">
+                            <select id="f49" required>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </td>
+                    </tr>
 
-                        <tr class="section-header">
-                            <td colspan="3">
-                                <div class="flex justify-between items-center px-2">
-                                    <span>5. वर्तमान पता (Current Address)</span>
-                                    <button type="button" onclick="copyPermanentAddress()" class="text-xs bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-3 py-1 rounded transition duration-150 cursor-pointer">स्थायी पता कॉपी करें</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">50</td>
-                            <td><label for="f50" class="font-medium">House Number/Name</label></td>
-                            <td><input type="text" id="f50" class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">51</td>
-                            <td><label for="f51" class="font-medium">Street/Mohalla/Sector</label></td>
-                            <td><input type="text" id="f51" class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">52</td>
-                            <td><label for="f52" class="font-medium">Panchayat *</label></td>
-                            <td><input type="text" id="f52" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">53</td>
-                            <td><label for="f53" class="font-medium">Post Office *</label></td>
-                            <td><input type="text" id="f53" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">54</td>
-                            <td><label for="f54" class="font-medium">Village/Area/Town *</label></td>
-                            <td><input type="text" id="f54" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">55</td>
-                            <td><label for="f55" class="font-medium">Block</label></td>
-                            <td><input type="text" id="f55" class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">56</td>
-                            <td><label for="f56" class="font-medium">District *</label></td>
-                            <td><input type="text" id="f56" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">57</td>
-                            <td><label for="f57" class="font-medium">PIN Code *</label></td>
-                            <td><input type="text" id="f57" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">58</td>
-                            <td><label for="f58" class="font-medium">State *</label></td>
-                            <td><input type="text" id="f58" value="Bihar" required class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">59</td>
-                            <td><label for="f59" class="font-medium">Domicile Certificate Submitted at the time of Appointment</label></td>
-                            <td>
-                                <select id="f59" class="w-full p-1.5 border border-gray-300 rounded">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">60</td>
-                            <td><label for="f60" class="font-medium">Domicile Certificate No. *</label></td>
-                            <td><input type="text" id="f60" class="w-full p-1.5 border border-gray-300 rounded"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">61</td>
-                            <td><label for="f61" class="font-medium">Copy of Domicile Certificate *</label></td>
-                            <td>
-                                <select id="f61" class="w-full p-1.5 border border-gray-300 rounded">
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    <tr class="section-row">
+                        <td colspan="3">
+                            <div class="section-row-inner">
+                                <span>Current Address [cite: 4]</span>
+                                <button type="button" onclick="copyPermanentAddress()" class="btn-copy">स्थायी पता कॉपी करें</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">50</td>
+                        <td class="col-info">House Number/Name :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f50"></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">51</td>
+                        <td class="col-info">Street/Mohalla/Sector :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f51"></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">52</td>
+                        <td class="col-info">Panchayat* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f52" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">53</td>
+                        <td class="col-info">Post Office* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f53" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">54</td>
+                        <td class="col-info">Village/Area/Town* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f54" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">55</td>
+                        <td class="col-info">Block :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f55"></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">56</td>
+                        <td class="col-info">District* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f56" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">57</td>
+                        <td class="col-info">PIN Code* :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f57" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">58</td>
+                        <td class="col-info">State :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f58" value="Bihar" required></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">59</td>
+                        <td class="col-info">Domicile Certificate Submitted at the time of Appointment [cite: 4]</td>
+                        <td class="col-fill">
+                            <select id="f59">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">60</td>
+                        <td class="col-info">Domicile Certificate No. * :- [cite: 4]</td>
+                        <td class="col-fill"><input type="text" id="f60"></td>
+                    </tr>
+                    <tr>
+                        <td class="col-si">61</td>
+                        <td class="col-info">Copy of Domicile Certificate* :- [cite: 4]</td>
+                        <td class="col-fill">
+                            <select id="f61">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-            <div class="pt-4 flex justify-end">
-                <button type="button" onclick="generatePDF()" class="w-full md:w-auto bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition duration-200 cursor-pointer text-base block">
+            <div class="clearfix">
+                <button type="button" onclick="generatePDF()" class="btn-save-bottom">
                     विवरण सहेजें और PDF डाउनलोड करें
                 </button>
             </div>
@@ -434,7 +566,7 @@
     </div>
 
     <script>
-        // स्थायी पता कॉपी करने का फ़ंक्शन
+        // स्थायी पता को वर्तमान पते में कॉपी करने का लॉजिक
         function copyPermanentAddress() {
             const fieldMap = {
                 'f38': 'f50', 'f39': 'f51', 'f40': 'f52', 'f41': 'f53',
@@ -450,51 +582,49 @@
             }
         }
 
-        // PDF बनाने और डाउनलोड करने का मुख्य फ़ंक्शन
+        // हूबहू टेबल फॉर्मेट में PDF जनरेट करने का मुख्य फ़ंक्शन
         function generatePDF() {
             const form = document.getElementById('dcfForm');
             
-            // HTML5 वैलिडेशन चेक करें (जैसे कोई ज़रूरी फ़ील्ड खाली तो नहीं है)
+            // फ़ील्ड वैलिडेशन चेक
             if (!form.checkValidity()) {
                 form.reportValidity();
                 return;
             }
 
-            // क्लोन बनाएँ ताकि मूल स्क्रीन फॉर्म में कोई बदलाव न आए
+            // मूल कंटेनर का क्लोन बनाएँ
             const originalContainer = document.getElementById('form-container');
             const clone = originalContainer.cloneNode(true);
             
-            // क्लोन में से ऊपरी और निचली एक्शन रो (बटन) को हटा दें ताकि प्रिंट में बटन न आएँ
-            const actionRow = clone.querySelector('.flex.flex-col.md\\:flex-row');
-            if (actionRow) actionRow.remove();
-            const bottomBtn = clone.querySelector('.pt-4');
-            if (bottomBtn) bottomBtn.remove();
-
-            // वर्तमान पते के अंतर्गत बने "स्थायी पता कॉपी करें" वाले इनर बटन को भी क्लोन से हटाएँ
-            const copyBtn = clone.querySelector('button[onclick="copyPermanentAddress()"]');
+            // क्लोन से सभी बटन हटाएं ताकि वे प्रिंट में न आएं
+            const topBtn = clone.querySelector('.btn-save-top');
+            if (topBtn) topBtn.parentElement.remove();
+            const bottomBtn = clone.querySelector('.btn-save-bottom');
+            if (bottomBtn) bottomBtn.parentElement.remove();
+            const copyBtn = clone.querySelector('.btn-copy');
             if (copyBtn) copyBtn.remove();
 
-            // क्लोन की टेबल के अंदर इनपुट बॉक्स और ड्रॉपडाउन की जगह शुद्ध टेक्स्ट रिप्लेस करें
+            // इनपुट/ड्रॉपडाउन की जगह उनका भरा हुआ साफ़ टेक्स्ट डालें ताकि ओरिजिनल टेबल लेआउट सुरक्षित रहे
             const inputs = originalContainer.querySelectorAll('input, select');
             const cloneInputs = clone.querySelectorAll('input, select');
 
             inputs.forEach((input, index) => {
-                let value = input.value || '-';
-
+                const value = input.value || '-';
                 const textSpan = document.createElement('span');
                 textSpan.innerText = value;
-                textSpan.className = "text-gray-900 font-semibold";
+                textSpan.style.fontWeight = "bold";
+                textSpan.style.color = "#111827";
                 
                 if (cloneInputs[index] && cloneInputs[index].parentElement) {
                     cloneInputs[index].parentElement.replaceChild(textSpan, cloneInputs[index]);
                 }
             });
 
-            // शिक्षक का नाम फ़ाइल नेम के लिए प्राप्त करें
+            // शिक्षक का नाम फ़ाइल नेम के लिए उपयोग करें
             const firstName = document.getElementById('f2').value || 'Teacher';
-            const lastName = document.getElementById('f4').value || 'Registration';
+            const lastName = document.getElementById('f4').value || 'DCF';
 
-            // html2pdf कॉन्फ़िगरेशन ऑप्शन्स (Page-Break हैंडलिंग के साथ)
+            // html2pdf सेटिंग्स (A4 साइज़ टेबल फ़ॉर्मेट)
             const opt = {
                 margin:       [12, 12, 12, 12],
                 filename:     `E-Shikshakosh_DCF_${firstName}_${lastName}.pdf`,
@@ -504,7 +634,7 @@
                 pagebreak:    { mode: ['avoid-all', 'css'] }
             };
 
-            // PDF जनरेट करें
+            // PDF डाउनलोड करें
             html2pdf().set(opt).from(clone).save();
         }
     </script>
