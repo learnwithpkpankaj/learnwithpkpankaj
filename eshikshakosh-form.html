@@ -586,6 +586,26 @@
         }
 
         function generatePDF() {
+            const form = document.getElementById('dcfForm');
+            
+            // कोई भी फ़ील्ड 'required' नहीं है, इसलिए सीधे डेटा सिंकिंग शुरू होगी।
+            const allInputs = form.querySelectorAll('input, select');
+            allInputs.forEach(input => {
+                if (input.tagName.toLowerCase() === 'select') {
+                    input.setAttribute('value', input.value);
+                    const options = input.querySelectorAll('option');
+                    options.forEach(opt => {
+                        if (opt.value === input.value) {
+                            opt.setAttribute('selected', 'selected');
+                        } else {
+                            opt.removeAttribute('selected');
+                        }
+                    });
+                } else {
+                    input.setAttribute('value', input.value);
+                }
+            });
+
             const originalContainer = document.getElementById('form-container');
             const clone = originalContainer.cloneNode(true);
             
@@ -596,15 +616,16 @@
             const copyBtn = clone.querySelector('.btn-copy');
             if (copyBtn) copyBtn.remove();
 
-            const inputs = originalContainer.querySelectorAll('input, select');
             const cloneInputs = clone.querySelectorAll('input, select');
 
-            inputs.forEach((input, index) => {
+            allInputs.forEach((input, index) => {
                 const value = input.value || '-';
                 const textSpan = document.createElement('span');
                 textSpan.innerText = value;
                 textSpan.style.fontWeight = "bold";
                 textSpan.style.color = "#111827";
+                textSpan.style.display = "inline-block";
+                textSpan.style.padding = "4px 0";
                 
                 if (cloneInputs[index] && cloneInputs[index].parentElement) {
                     cloneInputs[index].parentElement.replaceChild(textSpan, cloneInputs[index]);
@@ -618,12 +639,15 @@
                 margin:       [12, 12, 12, 12],
                 filename:     `E-Shikshakosh_DCF_${firstName}_${lastName}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
+                html2canvas:  { scale: 2, useCORS: true, logging: false },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak:    { mode: ['avoid-all', 'css'] }
             };
 
-            html2pdf().set(opt).from(clone).save();
+            // मोबाइल रेंडरिंग के लिए 150ms का टाइमआउट फिक्स
+            setTimeout(() => {
+                html2pdf().set(opt).from(clone).save();
+            }, 150);
         }
     </script>
 </body>
