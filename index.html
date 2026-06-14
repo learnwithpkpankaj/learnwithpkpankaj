@@ -108,13 +108,14 @@
             position: absolute;
             top: 100%;
             left: 0;
-            min-width: 250px;
+            min-width: 260px;
             background: #ffffff;
             border: 1px solid var(--line);
             border-top: 4px solid var(--accent);
             box-shadow: 0 12px 28px rgba(31, 41, 55, 0.16);
             border-radius: 0 0 8px 8px;
-            overflow: hidden;
+            overflow: visible;
+            z-index: 100;
         }
 
         .dropdown-content a {
@@ -123,6 +124,39 @@
             font-weight: 600;
             border-bottom: 1px solid #eef2f7;
         }
+
+        /* --- सब-मेनू (Sub-menu) स्टाइल्स --- */
+        .sub-dropdown {
+            position: relative;
+        }
+
+        .sub-dropdown-content {
+            display: none;
+            position: absolute;
+            left: 100%; /* डेस्कटॉप पर राइट साइड में खुलेगा */
+            top: 0;
+            background: #ffffff;
+            min-width: 220px;
+            border: 1px solid var(--line);
+            border-left: 4px solid var(--accent);
+            box-shadow: 6px 6px 15px rgba(0,0,0,0.1);
+            z-index: 101;
+        }
+
+        .sub-dropdown:hover .sub-dropdown-content {
+            display: block;
+        }
+
+        .sub-dropdown-content a {
+            font-size: 14px;
+            background: #fff;
+            color: var(--primary) !important;
+        }
+
+        .sub-dropdown-content a:hover {
+            background: #fff9c4;
+        }
+        /* --------------------------- */
 
         .dropdown-content a:hover {
             color: var(--primary);
@@ -313,6 +347,15 @@
                 border-top: 0;
             }
 
+            /* मोबाइल पर सब-मेनू का व्यवहार */
+            .sub-dropdown-content {
+                position: static;
+                display: block;
+                box-shadow: none;
+                border-left: 8px solid var(--accent);
+                background: #fffde7;
+            }
+
             .intro,
             .grid {
                 grid-template-columns: 1fr;
@@ -351,7 +394,16 @@
                     <div class="dropdown-content">
                         <a href="#projects">NMMSS छात्रवृत्ति</a>
                         <a href="#projects">Project Based Learning (PBL)</a>
-                        <a href="navodaya-exam.html" style="color: #0d47a1; background: #fffde7; font-weight: 700;">नवोदय विद्यालय प्रवेश परीक्षा</a>
+                        
+                        <div class="sub-dropdown">
+                            <a href="navodaya-exam.html" style="color: #0d47a1; background: #fffde7; font-weight: 700; display: flex; justify-content: space-between;">
+                                नवोदय विद्यालय प्रवेश परीक्षा <span>▸</span>
+                            </a>
+                            <div class="sub-dropdown-content">
+                                <a href="navodaya-pattern.html">परीक्षा का पैटर्न</a>
+                            </div>
+                        </div>
+
                         <a href="eshikshakosh-form.html" style="color: #0d47a1; background: #eef5ff; font-weight: 700;">E-Shikshakosh DCF शिक्षक फॉर्म</a>
                         <a href="dcf-form.html">शिक्षक ऑफलाइन DCF फॉर्म</a>
                     </div>
@@ -395,7 +447,7 @@
                     </article>
                     <article class="card">
                         <h3>गणित</h3>
-                        <p>आसान tricks, logic and practice के साथ गणित को सरल बनाना।</p>
+                        <p>आसान tricks, logic और practice के साथ गणित को सरल बनाना।</p>
                     </article>
                     <article class="card">
                         <h3>सामान्य ज्ञान</h3>
