@@ -3,131 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>अनुपस्थिति विवरणी फॉर्म</title>
+    <title>डाटा एंट्री एवं PDF जनरेटर</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
             margin: 0;
-            padding: 10px;
-            background-color: #f4f4f4;
-        }
-        /* फॉर्म कंटेनर जो PDF में बदलेगा */
-        .pdf-container {
-            width: 100%;
-            max-width: 800px;
-            background: white;
             padding: 20px;
-            margin: 0 auto;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        /* यूजर को दिखने वाला फॉर्म स्टाइल */
+        .input-form-container {
+            max-width: 600px;
+            background: white;
+            padding: 25px;
+            margin: 0 auto 30px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
             box-sizing: border-box;
         }
-        .header-title {
-            text-align: center;
-            font-weight: bold;
-            font-size: 20px;
-            margin-bottom: 20px;
-            text-decoration: underline;
-        }
-        .top-meta {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        input[type="text"], input[type="number"], select {
-            border: none;
-            border-bottom: 1px dotted #000;
-            outline: none;
-            padding: 2px 5px;
-            font-size: 14px;
-            width: 100%;
-            background: transparent;
-        }
-        /* टेबल स्टाइलिंग */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: center;
-            font-size: 13px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        td input {
-            border: none !important;
-            text-align: center;
-        }
-        .instructions {
-            font-size: 12px;
-            margin-top: 20px;
-            line-height: 1.5;
-        }
-        .signature-section {
-            margin-top: 40px;
-            text-align: right;
-            font-weight: bold;
-            font-size: 14px;
-            padding-right: 20px;
-        }
-        /* बटन स्टाइल (यह PDF में नहीं दिखेगा) */
-        .btn-container {
-            text-align: center;
-            margin-top: 20px;
-            margin-bottom: 30px;
-        }
-        .print-btn {
-            background-color: #4CAF50;
+        .submit-btn {
+            background-color: #007bff;
             color: white;
-            padding: 12px 25px;
+            padding: 12px 20px;
             border: none;
             border-radius: 4px;
             font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
         }
-        .print-btn:hover {
-            background-color: #45a049;
-        }
+        .submit-btn:hover { background-color: #0056b3; }
 
-        /* प्रिंट और PDF के लिए विशेष CSS नियम */
-        @media print {
-            body { background: white; padding: 0; }
-            .btn-container { display: none; }
-            .pdf-container { box-shadow: none; padding: 0; width: 100%; }
-            input::placeholder { color: transparent; }
+        /* छुपा हुआ प्रिंटिंग टेम्पलेट (जो केवल PDF में दिखेगा) */
+        #pdf-template {
+            display: none; /* यह स्क्रीन पर यूजर को नहीं दिखेगा */
+            width: 210mm; /* A4 Size Width */
+            padding: 20mm;
+            background: white;
+            box-sizing: border-box;
+        }
+        .pdf-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 22px;
+            margin-bottom: 25px;
+            text-decoration: underline;
+        }
+        .pdf-meta-table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .pdf-meta-table td {
+            border: none;
+            padding: 6px 0;
+            font-size: 15px;
+        }
+        .dotted-line {
+            border-bottom: 1px dotted #000;
+            display: inline-block;
+            min-width: 150px;
+            padding-left: 5px;
+        }
+        /* मुख्य तालिका (Main Table) */
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .main-table th, .main-table td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .main-table th { background-color: #f2f2f2; }
+        .teacher-info {
+            text-align: left;
+            line-height: 1.6;
+        }
+        .instructions {
+            font-size: 12px;
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+        .signature {
+            margin-top: 50px;
+            text-align: right;
+            font-weight: bold;
+            font-size: 15px;
         }
     </style>
 </head>
 <body>
 
-<div class="pdf-container" id="form-content">
-    <div class="header-title">अनुपस्थिति विवरणी</div>
-    
-    <div class="top-meta">
-        <div class="meta-item">विद्यालय का नामः- <input type="text" id="school-name"></div>
-        <div class="meta-item">UDISE Code:- <input type="text" id="udise"></div>
-        <div class="meta-item">प्रखण्ड का नामः- <input type="text" id="block-name"></div>
-        <div class="meta-item">जिला का नाम- <input type="text" id="district" value="मुजफ्फरपुर"></div>
-        <div class="meta-item">माहः- <input type="text" id="month" style="width: 50px;"> वर्षः- <input type="text" id="year" value="2026" style="width: 60px;"></div>
-    </div>
+<div class="input-form-container">
+    <h2 style="text-align: center; margin-top:0;">डाटा एंट्री फॉर्म</h2>
+    <form id="userInputForm" onsubmit="generateProfessionalPDF(event)">
+        <div class="form-group">
+            <label>विद्यालय का नामः</label>
+            <input type="text" id="in-school" required placeholder="जैसे: राजकीय प्राथमिक विद्यालय...">
+        </div>
+        <div class="form-group">
+            <label>प्रखण्ड का नामः</label>
+            <input type="text" id="in-block" required>
+        </div>
+        <div class="form-group">
+            <label>UDISE Code:</label>
+            <input type="text" id="in-udise" required>
+        </div>
+        <div class="form-group">
+            <label>माह एवं वर्षः</label>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="in-month" placeholder="माह (e.g. जून)" required>
+                <input type="text" id="in-year" value="2026" placeholder="वर्ष" required>
+            </div>
+        </div>
+        
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+        <h3 style="margin-top:0; color:#555;">शिक्षक का विवरण</h3>
+        
+        <div class="form-group">
+            <label>प्राण नं०:</label>
+            <input type="text" id="in-pran" required>
+        </div>
+        <div class="form-group">
+            <label>शिक्षक का नाम:</label>
+            <input type="text" id="in-tname" required>
+        </div>
+        <div class="form-group">
+            <label>शिक्षक का प्रकार:</label>
+            <input type="text" id="in-ttype" required>
+        </div>
+        <div class="form-group">
+            <label>खाता संख्या:</label>
+            <input type="text" id="in-acc" required>
+        </div>
+        <div class="form-group">
+            <label>Basic Pay:</label>
+            <input type="text" id="in-basic" required>
+        </div>
+        <div class="form-group">
+            <label>अनुपस्थित (उपस्थिति पंजी में):</label>
+            <input type="text" id="in-abs-register" placeholder="यदि कोई हो">
+        </div>
+        <div class="form-group">
+            <label>अनुपस्थित (ई-शिक्षाकोष में):</label>
+            <input type="text" id="in-abs-eshiksha">
+        </div>
+        <div class="form-group">
+            <label>अभ्युक्ति (Remarks):</label>
+            <textarea id="in-remarks" rows="2"></textarea>
+        </div>
 
-    <table>
+        <button type="submit" class="submit-btn">डाटा सबमिट करें और PDF डाउनलोड करें</button>
+    </form>
+</div>
+
+
+<div id="pdf-template">
+    <div class="pdf-title">अनुपस्थिति विवरणी</div>
+    
+    <table class="pdf-meta-table">
+        <tr>
+            <td style="width: 60%;">विद्यालय का नामः- <span class="dotted-line" id="out-school"></span></td>
+            <td style="width: 40%;">UDISE Code:- <span class="dotted-line" id="out-udise"></span></td>
+        </tr>
+        <tr>
+            <td>प्रखण्ड का नामः- <span class="dotted-line" id="out-block"></span></td>
+            <td>जिला का नाम- <span class="dotted-line">मुजफ्फरपुर</span></td>
+        </tr>
+        <tr>
+            <td colspan="2">माहः- <span class="dotted-line" style="min-width:80px;" id="out-month"></span> वर्षः- <span class="dotted-line" style="min-width:80px;" id="out-year"></span></td>
+        </tr>
+    </table>
+
+    <table class="main-table">
         <thead>
             <tr>
-                <th style="width: 5%;">क्र० सं०</th>
-                <th style="width: 45%;">प्राण नं० / शिक्षक का नाम / शिक्षक का प्रकार / खाता संख्या / Basic Pay</th>
+                <th style="width: 8%;">क्र०सं</th>
+                <th style="width: 42%;">प्राण नं० / शिक्षक का नाम / शिक्षक का प्रकार / खाता संख्या / Basic Pay</th>
                 <th style="width: 15%;">अनुपस्थित (उपस्थिति पंजी)</th>
                 <th style="width: 15%;">अनुपस्थित (ई-शिक्षाकोष)</th>
                 <th style="width: 20%;">अभ्युक्ति</th>
@@ -136,29 +205,16 @@
         <tbody>
             <tr>
                 <td>1</td>
-                <td>
-                    <input type="text" placeholder="प्राण नं०" style="margin-bottom:4px;"><br>
-                    <input type="text" placeholder="शिक्षक का नाम" style="margin-bottom:4px; font-weight:bold;"><br>
-                    <input type="text" placeholder="शिक्षक का प्रकार" style="margin-bottom:4px;"><br>
-                    <input type="text" placeholder="खाता संख्या" style="margin-bottom:4px;"><br>
-                    <input type="text" placeholder="Basic Pay">
+                <td class="teacher-info">
+                    प्राण नं०: <span id="out-pran"></span><br>
+                    शिक्षक का नाम: <strong id="out-tname"></strong><br>
+                    शिक्षक का प्रकार: <span id="out-ttype"></span><br>
+                    खाता संख्या: <span id="out-acc"></span><br>
+                    Basic Pay: <span id="out-basic"></span>
                 </td>
-                <td><input type="text" style="height: 100px;"></td>
-                <td><input type="text" style="height: 100px;"></td>
-                <td><input type="text" style="height: 100px;"></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>
-                    <input type="text" placeholder="प्राण नं०" style="margin-bottom:4px;"><br>
-                    <input type="text" placeholder="शिक्षक का नाम" style="margin-bottom:4px; font-weight:bold;"><br>
-                    <input type="text" placeholder="शिक्षक का प्रकार" style="margin-bottom:4px;"><br>
-                    <input type="text" placeholder="खाता संख्या" style="margin-bottom:4px;"><br>
-                    <input type="text" placeholder="Basic Pay">
-                </td>
-                <td><input type="text" style="height: 100px;"></td>
-                <td><input type="text" style="height: 100px;"></td>
-                <td><input type="text" style="height: 100px;"></td>
+                <td id="out-abs-register"></td>
+                <td id="out-abs-eshiksha"></td>
+                <td id="out-remarks"></td>
             </tr>
         </tbody>
     </table>
@@ -168,30 +224,64 @@
         2. अनुपस्थित/निलंबित/स्थानांतरित/वेतन स्थगण/सेवानिवृत शिक्षक/शिक्षिका की सूचना अचूक रूप से 22.06.2026 तक कार्यालय को दी जाए, ताकि गलत भुगतान होने से बचा जा सके। विलम्ब कि सारी जवाबदेही प्रभारी प्रधानाध्यापक/प्रधान शिक्षक/प्रधानाध्यापक की होगी।
     </div>
 
-    <div class="signature-section">
+    <div class="signature">
         प्रधानाध्यापक का हस्ताक्षर एवं मुहर
     </div>
 </div>
 
-<div class="btn-container">
-    <button class="print-btn" onclick="generatePDF()">PDF सेव / प्रिंट करें</button>
-</div>
 
 <script>
-function generatePDF() {
-    const element = document.getElementById('form-content');
+function generateProfessionalPDF(event) {
+    event.preventDefault(); // फॉर्म को रीलोड होने से रोकें
+
+    // 1. फॉर्म का डाटा पढ़ें
+    const school = document.getElementById('in-school').value;
+    const block = document.getElementById('in-block').value;
+    const udise = document.getElementById('in-udise').value;
+    const month = document.getElementById('in-month').value;
+    const year = document.getElementById('in-year').value;
+    const pran = document.getElementById('in-pran').value;
+    const tname = document.getElementById('in-tname').value;
+    const ttype = document.getElementById('in-ttype').value;
+    const acc = document.getElementById('in-acc').value;
+    const basic = document.getElementById('in-basic').value;
+    const absReg = document.getElementById('in-abs-register').value || "-";
+    const absEsh = document.getElementById('in-abs-eshiksha').value || "-";
+    const remarks = document.getElementById('in-remarks').value || "-";
+
+    // 2. छुपाए गए PDF फॉर्मेट (टेम्पलेट) में डाटा मैप करें
+    document.getElementById('out-school').innerText = school;
+    document.getElementById('out-block').innerText = block;
+    document.getElementById('out-udise').innerText = udise;
+    document.getElementById('out-month').innerText = month;
+    document.getElementById('out-year').innerText = year;
+    document.getElementById('out-pran').innerText = pran;
+    document.getElementById('out-tname').innerText = tname;
+    document.getElementById('out-ttype').innerText = ttype;
+    document.getElementById('out-acc').innerText = acc;
+    document.getElementById('out-basic').innerText = basic;
+    document.getElementById('out-abs-register').innerText = absReg;
+    document.getElementById('out-abs-eshiksha').innerText = absEsh;
+    document.getElementById('out-remarks').innerText = remarks;
+
+    // 3. PDF जनरेट करने का लॉजिक
+    const element = document.getElementById('pdf-template');
     
-    // इनपुट बॉक्स के बॉर्डर्स को PDF जनरेट करते समय पूरी तरह छुपाने और टेक्स्ट को वैसे ही रखने के लिए सेटिंग्स
+    // टेम्पलेट को अस्थायी रूप से देखने योग्य बनाएं ताकि लाइब्रेरी स्क्रीनशॉट ले सके
+    element.style.display = 'block';
+
     const options = {
-        margin:       10,
-        filename:     'अनुपस्थिति_विवरणी.pdf',
+        margin:       15,
+        filename:     `अनुपस्थिति_विवरणी_${school}.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true },
+        html2canvas:  { scale: 2, logging: false },
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    // PDF जनरेट करें
-    html2pdf().set(options).from(element).save();
+    // PDF सेव करें और फिर से टेम्पलेट को छुपा दें
+    html2pdf().set(options).from(element).save().then(() => {
+        element.style.display = 'none'; // जनरेशन के बाद वापस छुपाएं
+    });
 }
 </script>
 
