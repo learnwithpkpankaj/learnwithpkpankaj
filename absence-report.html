@@ -60,7 +60,6 @@
             border: 1px solid #e0e0e0;
             border-radius: 6px;
             margin-bottom: 20px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
         }
         .remove-btn {
             background-color: #dc3545;
@@ -95,22 +94,19 @@
         }
 
         /* ======================================================= */
-        /* हूबहू सरकारी प्रिंट प्रारूप (A4 Landscape के लिए लॉक) */
+        /* हूबहू सरकारी प्रिंट प्रारूप (A4 Landscape परफेक्ट फॉर्मेट) */
         /* ======================================================= */
         #pdf-template {
-            display: none; /* स्क्रीन पर सामान्यतः छिपा रहेगा */
+            display: none; 
             background: white;
             color: #000;
         }
 
-        .pdf-page {
-            width: 297mm;  /* A4 Landscape की कुल चौड़ाई */
-            height: 210mm; /* A4 Landscape की कुल ऊँचाई */
+        .pdf-container-wrapper {
+            width: 297mm;  /* A4 Landscape की चौड़ाई */
             box-sizing: border-box;
             padding: 20mm 15mm;
-            position: relative;
             background: white;
-            page-break-after: always;
         }
 
         .pdf-title {
@@ -118,10 +114,9 @@
             font-weight: bold;
             font-size: 26px;
             margin-bottom: 25px;
-            letter-spacing: 0.5px;
         }
 
-        /* मेटा डाटा ग्रिड (जैसा आपके PDF में है) */
+        /* मेटा डाटा ग्रिड */
         .pdf-meta-table {
             width: 100%;
             margin-bottom: 20px;
@@ -146,7 +141,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
-            table-layout: fixed; /* कॉलम साइज फ्रीज करने के लिए */
+            table-layout: fixed; 
         }
         .main-table th, .main-table td {
             border: 1px solid #000 !important;
@@ -161,6 +156,13 @@
             font-weight: bold;
             background-color: #f9f9f9;
         }
+        
+        /* समाधान 2: शिक्षक की पूरी रो (Row) को अगले पेज पर टूटने से बचाना */
+        .main-table tbody tr {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+        }
+        
         .teacher-info-cell {
             text-align: left !important;
             line-height: 1.6;
@@ -173,23 +175,26 @@
             margin-top: 30px;
             line-height: 1.6;
             text-align: justify;
+            page-break-inside: avoid; /* निर्देश भी आधे न टूटें */
         }
+        
+        /* समाधान 1: हस्ताक्षर हमेशा सुरक्षित नीचे स्वतंत्र रहेगा */
         .signature-section {
-            position: absolute;
-            bottom: 25mm;
-            right: 15mm;
+            margin-top: 50px;
             text-align: right;
             font-weight: bold;
             font-size: 16px;
+            padding-right: 10px;
+            page-break-inside: avoid;
         }
 
         /* ======================================================= */
-        /* प्रिंट/PDF जनरेशन कमांड्स (CSS जो जादू की तरह काम करेगा) */
+        /* प्रिंट मोड सेटिंग्स */
         /* ======================================================= */
         @media print {
             @page {
                 size: A4 landscape;
-                margin: 0; /* ब्राउज़र के डिफ़ॉल्ट मार्जिन को हटाकर हमारा कस्टमाइज्ड मार्जिन लागू करेगा */
+                margin: 0; 
             }
             body {
                 background: white;
@@ -197,10 +202,10 @@
                 margin: 0;
             }
             .input-form-container {
-                display: none !important; /* प्रिंट करते समय फॉर्म छुप जाएगा */
+                display: none !important; 
             }
             #pdf-template {
-                display: block !important; /* केवल प्रिंट/PDF में शीट दिखेगी */
+                display: block !important; 
             }
         }
     </style>
@@ -249,14 +254,13 @@
         
         <div id="teachers-container">
             <div class="teacher-block" id="teacher-1">
-                <h4 style="margin-top:0; color:#555; display:inline-block;">शिक्षक #1</h4>
-                
+                <h4 style="margin-top:0; color:#555;">शिक्षक #1</h4>
                 <div class="form-row">
                     <div class="form-group"><label>प्राण नं०:</label><input type="text" class="in-pran" required></div>
                     <div class="form-group"><label>शिक्षक का नाम:</label><input type="text" class="in-tname" required></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>शिक्षक का प्रकार:</label><input type="text" class="in-ttype" placeholder="जैसे: Head Teacher / Assistant Teacher" required></div>
+                    <div class="form-group"><label>शिक्षक का प्रकार:</label><input type="text" class="in-ttype" placeholder="जैसे: Head Teacher" required></div>
                     <div class="form-group"><label>खाता संख्या:</label><input type="text" class="in-acc" required></div>
                 </div>
                 <div class="form-row">
@@ -276,7 +280,7 @@
 </div>
 
 <div id="pdf-template">
-    <div class="pdf-page">
+    <div class="pdf-container-wrapper">
         <div class="pdf-title">अनुपस्थिति विवरणी</div>
         
         <table class="pdf-meta-table">
@@ -321,7 +325,6 @@
 <script>
 let rowCount = 1;
 
-// नया शिक्षक जोड़ने की स्क्रिप्ट
 function addNewTeacherLine() {
     rowCount++;
     const container = document.getElementById('teachers-container');
@@ -351,11 +354,9 @@ function addNewTeacherLine() {
     container.appendChild(div);
 }
 
-// मुख्य प्रिंट फंक्शन
 function triggerSystemPrint(event) {
     event.preventDefault();
 
-    // फॉर्म से डेटा उठाकर आउटपुट टेम्पलेट में डालना [cite: 9, 10, 11, 14]
     document.getElementById('out-school').innerText = document.getElementById('in-school').value;
     document.getElementById('out-udise').innerText = document.getElementById('in-udise').value;
     document.getElementById('out-block').innerText = document.getElementById('in-block').value;
@@ -377,7 +378,6 @@ function triggerSystemPrint(event) {
         const absEsh = b.querySelector('.in-abs-eshiksha').value || "0";
         const remarks = b.querySelector('.in-remarks').value || "";
 
-        // सटीक लेआउट जो आपने शेयर किया है 
         const row = `
             <tr>
                 <td>${i + 1}</td>
@@ -396,7 +396,6 @@ function triggerSystemPrint(event) {
         tableBody.innerHTML += row;
     }
 
-    // ब्राउज़र का प्रिंट डायलॉग खोलें (यह मोबाइल और डेस्कटॉप दोनों पर सटीक PDF 'Save as PDF' का ऑप्शन देगा)
     window.print();
 }
 </script>
