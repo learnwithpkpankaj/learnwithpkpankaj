@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>अनुपस्थिति विवरणी जनरेटर (Landscape)</title>
+    <title>अनुपस्थिति विवरणी जनरेटर (सटीक प्रारूप)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
+        /* वेब UI स्टाइल (यूजर फॉर्म के लिए) */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f0f2f5;
@@ -36,15 +37,12 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-        
-        /* शिक्षक कार्ड स्टाइल (फॉर्म के अंदर) */
         .teacher-block {
             background: #f9f9f9;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 6px;
             margin-bottom: 15px;
-            position: relative;
         }
         .remove-btn {
             background-color: #dc3545;
@@ -77,252 +75,226 @@
             width: 100%;
         }
 
-        /* छुपा हुआ प्रिंटिंग टेम्पलेट (Landscape के लिए विशेष डिज़ाइन) */
+        /* ======================================================= */
+        /* सटीक मूल फॉर्मेट स्टाइल (यह केवल PDF आउटपुट में लॉक रहेगा) */
+        /* ======================================================= */
         #pdf-template {
-            display: none;
-            width: 277mm; /* A4 Landscape Width */
+            display: none; /* स्क्रीन पर छुपा रहेगा */
+            width: 277mm;  /* A4 Landscape की सटीक चौड़ाई मार्जिन छोड़कर */
             background: white;
             box-sizing: border-box;
-            padding: 10mm;
+            padding: 15mm 10mm;
+            color: #000;
         }
         .pdf-title {
             text-align: center;
             font-weight: bold;
-            font-size: 22px;
-            margin-bottom: 20px;
-            text-decoration: underline;
+            font-size: 24px;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
         }
-        .pdf-meta-table {
-            width: 100%;
+        .pdf-meta-container {
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 15px;
+            font-size: 15px;
+            line-height: 1.8;
         }
-        .pdf-meta-table td {
-            border: none;
-            padding: 4px 0;
-            font-size: 14px;
-        }
+        .meta-left { width: 55%; }
+        .meta-right { width: 40%; text-align: left; }
+        
         .dotted-line {
             border-bottom: 1px dotted #000;
             display: inline-block;
-            min-width: 150px;
+            min-width: 180px;
             padding-left: 5px;
+            font-weight: bold;
         }
         
-        /* मुख्य तालिका (टेक्स्ट रैपिंग के साथ) */
+        /* मुख्य तालिका (Symmetric Table Layout) */
         .main-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 15px 0;
-            table-layout: fixed; /* इससे कॉलम की चौड़ाई फिक्स रहेगी */
+            margin: 20px 0;
+            table-layout: fixed; 
         }
         .main-table th, .main-table td {
-            border: 1px solid black;
-            padding: 8px;
+            border: 1px solid #000;
+            padding: 10px 6px;
             text-align: center;
-            font-size: 12px;
-            /* टेक्स्ट रैप करने के लिए मुख्य प्रॉपर्टीज */
+            font-size: 14px;
             white-space: normal;
             word-wrap: break-word;
-            word-break: break-all;
+            word-break: break-word;
             vertical-align: top;
         }
-        .main-table th { background-color: #f2f2f2; }
-        .teacher-info {
+        .main-table th {
+            font-weight: bold;
+            background-color: #fdfdfd;
+        }
+        .teacher-info-cell {
             text-align: left;
-            line-height: 1.5;
+            line-height: 1.6;
+            padding-left: 10px !important;
         }
-        .instructions {
-            font-size: 11px;
-            margin-top: 20px;
-            line-height: 1.5;
+        
+        /* निर्देश एवं हस्ताक्षर भाग */
+        .instructions-section {
+            font-size: 13px;
+            margin-top: 30px;
+            line-height: 1.7;
+            text-align: justify;
+            width: 100%;
         }
-        .signature {
-            margin-top: 40px;
+        .signature-section {
+            margin-top: 60px;
             text-align: right;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 15px;
+            padding-right: 20px;
         }
     </style>
 </head>
 <body>
 
 <div class="input-form-container">
-    <h2 style="text-align: center; margin-top:0;">डाटा एंट्री फॉर्म (Landscape PDF)</h2>
-    <form id="userInputForm" onsubmit="generateProfessionalPDF(event)">
+    <h2 style="text-align: center; margin-top:0; color:#333;">अनुपस्थिति विवरणी डाटा एंट्री</h2>
+    <form id="userInputForm" onsubmit="generateExactPDF(event)">
         
         <div class="form-group">
-            <label>विद्यालय का नामः</label>
+            <label>विद्यालय का नामः-</label>
             <input type="text" id="in-school" required>
         </div>
         <div class="form-group">
-            <label>प्रखण्ड का नामः</label>
+            <label>प्रखण्ड का नामः-</label>
             <input type="text" id="in-block" required>
         </div>
         <div class="form-group">
-            <label>UDISE Code:</label>
+            <label>UDISE Code:-</label>
             <input type="text" id="in-udise" required>
         </div>
         <div class="form-group">
             <label>माह एवं वर्षः</label>
             <div style="display: flex; gap: 10px;">
-                <input type="text" id="in-month" placeholder="माह" required>
+                <input type="text" id="in-month" placeholder="माह (जैसे: जून)" required>
                 <input type="text" id="in-year" value="2026" required>
             </div>
         </div>
         
-        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-        <h3 style="margin-top:0; color:#555;">शिक्षकों का विवरण (Lines)</h3>
+        <hr style="margin: 25px 0; border: 0; border-top: 2px solid #ddd;">
+        <h3 style="margin-top:0; color:#007bff;">शिक्षकों की सूची (Lines)</h3>
         
         <div id="teachers-container">
             <div class="teacher-block" id="teacher-1">
-                <div class="form-group">
-                    <label>प्राण नं०:</label>
-                    <input type="text" class="in-pran" required>
-                </div>
-                <div class="form-group">
-                    <label>शिक्षक का नाम:</label>
-                    <input type="text" class="in-tname" required>
-                </div>
-                <div class="form-group">
-                    <label>शिक्षक का प्रकार:</label>
-                    <input type="text" class="in-ttype" required>
-                </div>
-                <div class="form-group">
-                    <label>खाता संख्या:</label>
-                    <input type="text" class="in-acc" required>
-                </div>
-                <div class="form-group">
-                    <label>Basic Pay:</label>
-                    <input type="text" class="in-basic" required>
-                </div>
-                <div class="form-group">
-                    <label>अनुपस्थित (उपस्थिति पंजी में):</label>
-                    <input type="text" class="in-abs-register">
-                </div>
-                <div class="form-group">
-                    <label>अनुपस्थित (ई-शिक्षाकोष में):</label>
-                    <input type="text" class="in-abs-eshiksha">
-                </div>
-                <div class="form-group">
-                    <label>अभ्युक्ति (Remarks):</label>
-                    <textarea class="in-remarks" rows="2"></textarea>
-                </div>
+                <h4 style="margin-top:0; color:#555;">शिक्षक संख्या #1</h4>
+                <div class="form-group"><label>प्राण नं०:</label><input type="text" class="in-pran" required></div>
+                <div class="form-group"><label>शिक्षक का नाम:</label><input type="text" class="in-tname" required></div>
+                <div class="form-group"><label>शिक्षक का प्रकार:</label><input type="text" class="in-ttype" required></div>
+                <div class="form-group"><label>खाता संख्या:</label><input type="text" class="in-acc" required></div>
+                <div class="form-group"><label>Basic Pay:</label><input type="text" class="in-basic" required></div>
+                <div class="form-group"><label>अनुपस्थित (उपस्थिति पंजी):</label><input type="text" class="in-abs-register" placeholder="यदि कोई हो"></div>
+                <div class="form-group"><label>अनुपस्थित (ई-शिक्षाकोष):</label><input type="text" class="in-abs-eshiksha" placeholder="यदि कोई हो"></div>
+                <div class="form-group"><label>अभ्युक्ति:</label><textarea class="in-remarks" rows="2"></textarea></div>
             </div>
         </div>
 
-        <button type="button" class="add-btn" onclick="addTeacherRow()">+ नया शिक्षक (Line) जोड़ें</button>
-        <button type="submit" class="submit-btn">डाटा सबमिट करें और Landscape PDF डाउनलोड करें</button>
+        <button type="button" class="add-btn" onclick="addTeacherField()">+ नया शिक्षक (Line) जोड़ें</button>
+        <button type="submit" class="submit-btn">डाटा सबमिट करें और हूबहू PDF जनरेट करें</button>
     </form>
 </div>
 
 <div id="pdf-template">
-    <div class="pdf-title">अनुपस्थिति विवरणी</div> [cite: 4]
+    <div class="pdf-title">अनुपस्थिति विवरणी</div>
     
-    <table class="pdf-meta-table">
-        <tr>
-            <td style="width: 50%;">विद्यालय का नामः- <span class="dotted-line" id="out-school"></span></td> [cite: 1]
-            <td style="width: 50%;">UDISE Code:- <span class="dotted-line" id="out-udise"></span></td> [cite: 5]
-        </tr>
-        <tr>
-            <td>प्रखण्ड का नामः- <span class="dotted-line" id="out-block"></span></td> [cite: 2]
-            <td>जिला का नाम- <span class="dotted-line">मुजफ्फरपुर</span></td> [cite: 6]
-        </tr>
-        <tr>
-            <td colspan="2">माहः- <span class="dotted-line" style="min-width:100px;" id="out-month"></span> वर्षः- <span class="dotted-line" style="min-width:100px;" id="out-year"></span></td> [cite: 3]
-        </tr>
-    </table>
+    <div class="pdf-meta-container">
+        <div class="meta-left">
+            विद्यालय का नामः- <span class="dotted-line" id="out-school"></span><br>
+            प्रखण्ड का नामः- <span class="dotted-line" id="out-block"></span><br>
+            माहः- <span class="dotted-line" style="min-width:100px;" id="out-month"></span> वर्षः- <span class="dotted-line" style="min-width:100px;" id="out-year"></span>
+        </div>
+        <div class="meta-right">
+            UDISE Code:- <span class="dotted-line" id="out-udise"></span><br>
+            जिला का नाम- <span style="font-weight: bold;">मुजफ्फरपुर</span>
+        </div>
+    </div>
 
     <table class="main-table">
         <thead>
             <tr>
-                <th style="width: 5%;">क्र० सं०</th> 
-                <th style="width: 45%;">प्राण नं० / शिक्षक का नाम / शिक्षक का प्रकार / खाता संख्या / Basic Pay</th> 
-                <th style="width: 15%;">अनुपस्थित (उपस्थिति पंजी)</th> 
-                <th style="width: 15%;">अनुपस्थित (ई-शिक्षाकोष)</th> 
-                <th style="width: 20%;">अभ्युक्ति</th> 
+                <th style="width: 6%;">क्र० सं०</th>
+                <th style="width: 44%;">प्राण नं० / शिक्षक का नाम / शिक्षक का प्रकार / खाता संख्या / Basic Pay</th>
+                <th style="width: 15%;">अनुपस्थित (उपस्थिति पंजी)</th>
+                <th style="width: 15%;">अनुपस्थित (ई-शिक्षाकोष)</th>
+                <th style="width: 20%;">अभ्युक्ति</th>
             </tr>
         </thead>
         <tbody id="pdf-table-body">
             </tbody>
     </table>
 
-    <div class="instructions">
-        1. विद्यालय में योगदान/स्थानांतरण/विरमण/सेवानिवृति होने कि स्थिति में स्पष्ट उल्लेख करना सुनिश्चित करें।<br> 
-        2. अनुपस्थित/निलंबित/स्थानांतरित/वेतन स्थगण/सेवानिवृत शिक्षक/शिक्षिका की सूचना अचूक रूप से 22.06.2026 तक कार्यालय को दी जाए, ताकि गलत भुगतान होने से बचा जा सके। विलम्ब कि सारी जवाबदेही प्रभारी प्रधानाध्यापक/प्रधान शिक्षक/प्रधानाध्यापक की होगी। 
+    <div class="instructions-section">
+        1. विद्यालय में योगदान/स्थानांतरण/विरमण/सेवानिवृति होने कि स्थिति में स्पष्ट उल्लेख करना सुनिश्चित करें लें।<br>
+        2. अनुपस्थित/निलंबित/स्थानांतरित/वेतन स्थगण/सेवानिवृत शिक्षक/शिक्षिका की सूचना अचूक रूप से 22.06.2026 तक कार्यालय को दी जाए, ताकि गलत भुगतान होने से बचा जा सके। विलम्ब कि सारी जवाबदेही प्रभारी प्रधानाध्यापक/प्रधान शिक्षक/प्रधानाध्यापक की होगी।
     </div>
 
-    <div class="signature">
-        प्रधानाध्यापक का हस्ताक्षर एवं मुहर [cite: 8]
+    <div class="signature-section">
+        प्रधानाध्यापक का हस्ताक्षर एवं मुहर
     </div>
 </div>
 
 <script>
-let teacherCount = 1;
+let count = 1;
 
-// नया शिक्षक (Line) जोड़ने का फंक्शन
-function addTeacherRow() {
-    teacherCount++;
+function addTeacherField() {
+    count++;
     const container = document.getElementById('teachers-container');
-    const newBlock = document.createElement('div');
-    newBlock.classList.add('teacher-block');
-    newBlock.id = `teacher-${teacherCount}`;
-    
-    newBlock.innerHTML = `
-        <button type="button" class="remove-btn" onclick="removeTeacherRow(${teacherCount})">हटाएं</button>
-        <h4 style="margin-top:0; color:#007bff;">शिक्षक संख्या #${teacherCount}</h4>
+    const div = document.createElement('div');
+    div.classList.add('teacher-block');
+    div.id = `teacher-${count}`;
+    div.innerHTML = `
+        <button type="button" class="remove-btn" onclick="document.getElementById('teacher-${count}').remove()">हटाएं</button>
+        <h4 style="margin-top:0; color:#555;">शिक्षक संख्या #${count}</h4>
         <div class="form-group"><label>प्राण नं०:</label><input type="text" class="in-pran" required></div>
         <div class="form-group"><label>शिक्षक का नाम:</label><input type="text" class="in-tname" required></div>
         <div class="form-group"><label>शिक्षक का प्रकार:</label><input type="text" class="in-ttype" required></div>
         <div class="form-group"><label>खाता संख्या:</label><input type="text" class="in-acc" required></div>
         <div class="form-group"><label>Basic Pay:</label><input type="text" class="in-basic" required></div>
-        <div class="form-group"><label>अनुपस्थित (उपस्थिति पंजी में):</label><input type="text" class="in-abs-register"></div>
-        <div class="form-group"><label>अनुपस्थित (ई-शिक्षाकोष में):</label><input type="text" class="in-abs-eshiksha"></div>
-        <div class="form-group"><label>अभ्युक्ति (Remarks):</label><textarea class="in-remarks" rows="2"></textarea></div>
+        <div class="form-group"><label>अनुपस्थित (उपस्थिति पंजी):</label><input type="text" class="in-abs-register"></div>
+        <div class="form-group"><label>अनुपस्थित (ई-शिक्षाकोष):</label><input type="text" class="in-abs-eshiksha"></div>
+        <div class="form-group"><label>अभ्युक्ति:</label><textarea class="in-remarks" rows="2"></textarea></div>
     `;
-    container.appendChild(newBlock);
+    container.appendChild(div);
 }
 
-// शिक्षक ब्लॉक हटाने का फंक्शन
-function removeTeacherRow(id) {
-    const block = document.getElementById(`teacher-${id}`);
-    if(block) block.remove();
-}
-
-// PDF जनरेट करने का मुख्य फंक्शन
-function generateProfessionalPDF(event) {
+function generateExactPDF(event) {
     event.preventDefault();
 
-    // सामान्य विवरणी डाटा भरना
+    // मेटा डाटा मैपिंग
     document.getElementById('out-school').innerText = document.getElementById('in-school').value;
     document.getElementById('out-block').innerText = document.getElementById('in-block').value;
     document.getElementById('out-udise').innerText = document.getElementById('in-udise').value;
     document.getElementById('out-month').innerText = document.getElementById('in-month').value;
     document.getElementById('out-year').innerText = document.getElementById('in-year').value;
 
-    // पीडीएफ टेबल बॉडी को क्लियर करना
     const tableBody = document.getElementById('pdf-table-body');
     tableBody.innerHTML = '';
 
-    // फॉर्म से सभी शिक्षकों के ब्लॉक्स को निकालना
-    const teacherBlocks = document.getElementsByClassName('teacher-block');
-    
-    for (let i = 0; i < teacherBlocks.length; i++) {
-        const block = teacherBlocks[i];
-        
-        const pran = block.querySelector('.in-pran').value;
-        const tname = block.querySelector('.in-tname').value;
-        const ttype = block.querySelector('.in-ttype').value;
-        const acc = block.querySelector('.in-acc').value;
-        const basic = block.querySelector('.in-basic').value;
-        const absReg = block.querySelector('.in-abs-register').value || "-";
-        const absEsh = block.querySelector('.in-abs-eshiksha').value || "-";
-        const remarks = block.querySelector('.in-remarks').value || "-";
+    const blocks = document.getElementsByClassName('teacher-block');
+    for (let i = 0; i < blocks.length; i++) {
+        const b = blocks[i];
+        const pran = b.querySelector('.in-pran').value;
+        const tname = b.querySelector('.in-tname').value;
+        const ttype = b.querySelector('.in-ttype').value;
+        const acc = b.querySelector('.in-acc').value;
+        const basic = b.querySelector('.in-basic').value;
+        const absReg = b.querySelector('.in-abs-register').value || "";
+        const absEsh = b.querySelector('.in-abs-eshiksha').value || "";
+        const remarks = b.querySelector('.in-remarks').value || "";
 
-        // डायनेमिक HTML टेबल रो (Row) बनाना
         const row = `
             <tr>
                 <td>${i + 1}</td>
-                <td class="teacher-info">
+                <td class="teacher-info-cell">
                     प्राण नं०: ${pran}<br>
                     शिक्षक का नाम: <strong>${tname}</strong><br>
                     शिक्षक का प्रकार: ${ttype}<br>
@@ -338,19 +310,18 @@ function generateProfessionalPDF(event) {
     }
 
     const element = document.getElementById('pdf-template');
-    element.style.display = 'block'; // जनरेशन के लिए लाइव शो करें
+    element.style.display = 'block'; // जनरेशन के लिए टेम्पररी डिस्प्ले ऑन करें
 
-    // LANDSCAPE ओरिएंटेशन के साथ पीडीएफ कॉन्फ़िगरेशन
     const options = {
-        margin:       10,
+        margin:       [10, 10, 10, 10], // चारों तरफ बराबर मार्जिन
         filename:     `अनुपस्थिति_विवरणी_${document.getElementById('in-school').value}.pdf`,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, logging: false },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' } // यहाँ चेंज किया गया है
+        image:        { type: 'jpeg', quality: 1.0 },
+        html2canvas:  { scale: 2.5, useCORS: true, letterRendering: true }, 
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
     };
 
     html2pdf().set(options).from(element).save().then(() => {
-        element.style.display = 'none'; // सेव होने के बाद वापस छुपाएं
+        element.style.display = 'none'; // पीडीएफ सेव होने के बाद वापस छुपाएं
     });
 }
 </script>
