@@ -43,11 +43,18 @@
     <div class="form-section no-print">
         <h2>Bill Details Data Entry</h2>
         
+        <!-- School ki details enter karne ka option -->
+        <h4>School Details:</h4>
+        <div class="input-group">
+            <input type="text" id="schoolName" placeholder="School Name (e.g. P.S. JAIMAL DUMRI URDU)">
+            <input type="text" id="schoolAddress" placeholder="Address (e.g. PAROO, MUZAFFARPUR)">
+            <input type="text" id="udiseCode" placeholder="DISE Code (e.g. 10140307401)">
+        </div>
+
+        <h4>Invoice Details:</h4>
         <div class="input-group">
             <input type="text" id="invNo" placeholder="Invoice No. (e.g. T-00020)">
             <input type="date" id="invDate">
-        </div>
-        <div class="input-group">
             <input type="text" id="billPeriod" placeholder="Bill Period (e.g. 01/06/2026 TO 30/06/2026)">
         </div>
 
@@ -81,13 +88,14 @@
         <button class="btn" type="button" onclick="generateBill()" style="float: right; font-size: 16px;">Generate & Print PDF</button>
     </div>
 
+    <!-- Generated Invoice Area -->
     <div class="invoice-box" id="printArea">
         <div class="text-center">
             <div style="letter-spacing: 2px;">TAX INVOICE</div>
             <div>CREDIT MEMO <span style="float: right;">Original/Dupli./Tripl.</span></div>
             <h2 style="margin: 5px 0;">M/S. LAKSHMI KIRANA</h2>
-            <div>Dhumnagar, Motipur, Muzaffarpur</div>
-            <div><b>MUZAFFARPUR(BIHAR) 843111</b></div>
+            <div>DHUMNAGAR, MOTIPUR, MUZAFFARPUR</div>
+            <div><b>MUZAFFARPUR(BIHAR) 84111</b></div>
         </div>
 
         <div class="flex-row" style="margin-top: 10px;">
@@ -99,11 +107,10 @@
 
         <div class="flex-row">
             <div>
-                <b>HEAD MASTER/HEAT TEACHER/INCHARGE HEAD MASTER</b><br>
-                P.S. JAIMAL DUMRI URDU<br>
-                PAROO<br>
-                MUZAFFARPUR<br>
-                DISE CODE- 10140307401<br>
+                <b>HEAD MASTER/HEAD TEACHER/INCHARGE HEAD MASTER</b><br>
+                <span id="outSchoolName"></span><br>
+                <span id="outSchoolAddress"></span><br>
+                DISE CODE- <span id="outUdiseCode"></span><br>
                 Bill Period : <span id="outBillPeriod"></span>
             </div>
             <div style="border-left: 1px dashed #000; padding-left: 15px;">
@@ -145,15 +152,14 @@
             </div>
         </div>
 
-        <div class="voucher-text">Voucher</div>
-
+       
         <div class="flex-row">
             <div>
                 <b>BANK DETAILS</b><br>
-                ACCOUNT NO. : 37894860929<br>
-                BANK NAME   : STATE BANK OF INDIA<br>
-                BRANCH      : REPURA BAZAR, SARAIYA<br>
-                IFSC        : SBIN0017441
+                ACCOUNT NO. : 50200091641524<br>
+                BANK NAME   : HDFC BANK LTD<br>
+                BRANCH      :BRAHMPURA, MUZAFFARPUR<br>
+                IFSC        : HDFC0003716
             </div>
             <div style="display: flex; align-items: flex-end; padding-right: 20px;">
                 <div style="border-top: 1px dashed #000; padding-top: 5px;">Authorised signatory</div>
@@ -161,11 +167,10 @@
         </div>
         
         <div style="margin-top: 20px; font-size: 12px; border-bottom: 1px dashed #000; padding-bottom: 5px;">
-            #Computer Generated Invoice./Design & Developed By Web Developer
+            #Computer Generated Invoice./Design & Developed By PKP
         </div>
     </div>
 
-    <!-- YAHAN SE SCRIPT SHURU HOTA HAI JO BUTTONS KO KAAM KARWATA HAI -->
     <script>
         function addRow() {
             const tbody = document.getElementById("itemBody");
@@ -187,17 +192,22 @@
         }
 
         function generateBill() {
+            // Fetching School Details from input
+            document.getElementById("outSchoolName").innerText = document.getElementById("schoolName").value;
+            document.getElementById("outSchoolAddress").innerText = document.getElementById("schoolAddress").value;
+            document.getElementById("outUdiseCode").innerText = document.getElementById("udiseCode").value;
+
+            // Fetching Invoice Details from input
             document.getElementById("outInvNo").innerText = document.getElementById("invNo").value;
+            document.getElementById("outBillPeriod").innerText = document.getElementById("billPeriod").value;
             
-            // Date Format ko thik karne ke liye
+            // Format Date
             let dateVal = document.getElementById("invDate").value;
             if(dateVal) {
                 let d = new Date(dateVal);
                 let formattedDate = ("0" + d.getDate()).slice(-2) + "/" + ("0" + (d.getMonth() + 1)).slice(-2) + "/" + d.getFullYear();
                 document.getElementById("outInvDate").innerText = formattedDate;
             }
-
-            document.getElementById("outBillPeriod").innerText = document.getElementById("billPeriod").value;
 
             const rows = document.querySelectorAll("#itemBody tr");
             const outBody = document.getElementById("outItemBody");
