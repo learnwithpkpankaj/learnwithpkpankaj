@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Invoice Generator</title>
+    <style>
+        /* बिल का फॉन्ट कंप्यूटर जनरेटेड (Dot Matrix) जैसा दिखाने के लिए Monospace का उपयोग किया गया है */
+        body {
+            font-family: 'Courier New', Courier, monospace; 
+            margin: 20px;
+            font-size: 14px;
+            color: #000;
+        }
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+        .text-center { text-align: center; }
+        .flex-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        
+        .dashed-line { 
+            border-top: 1px dashed #000; 
+            margin: 10px 0; 
+        }
+        
+        /* टेबल की डिजाइन */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border-left: 1px dashed #000;
+            border-right: 1px dashed #000;
+            padding: 4px 8px;
+        }
+        th {
+            border-top: 1px dashed #000;
+            border-bottom: 1px dashed #000;
+            text-align: left;
+        }
+        .border-bottom { border-bottom: 1px dashed #000; }
+        
+        /* टोटल सेक्शन की डिजाइन */
+        .total-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .total-calcs {
+            width: 40%;
+        }
+        .total-calcs div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+        }
+        
+        /* लाल रंग का Voucher टेक्स्ट */
+        .voucher-text {
+            color: #ff4d4d;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: right;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* प्रिंट बटन छिपाने के लिए जब पेज प्रिंट हो रहा हो */
+        @media print {
+            .no-print { display: none; }
+            .invoice-box { border: none; box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- प्रिंट बटन -->
+    <div class="text-center no-print" style="margin-bottom: 20px;">
+        <button onclick="window.print()" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background: #4CAF50; color: white; border: none; border-radius: 5px;">
+            Print / Save as PDF
+        </button>
+    </div>
+
+    <!-- मुख्य इनवॉइस कंटेनर -->
+    <div class="invoice-box">
+        <div class="text-center">
+            <div style="letter-spacing: 2px;">TAX INVOICE</div>
+            <div>CREDIT MEMO <span style="float: right;">Original/Dupli./Tripl.</span></div>
+            <h2 style="margin: 5px 0;">SHUBH KIRANA STORES</h2>
+            <div>REPURA BAZAR, SARAIYA, MUZAFFARPUR</div>
+            <div><b>MUZAFFARPUR(BIHAR)</b></div>
+        </div>
+
+        <div class="flex-row" style="margin-top: 10px;">
+            <div>GSTIN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10BOOPK2572L1ZS</div>
+            <div>Phone : 9955566086, 8340652131</div>
+        </div>
+
+        <div class="dashed-line"></div>
+
+        <div class="flex-row">
+            <div>
+                <b>HEAD MASTER/INCHARGE HEAD MASTER</b><br>
+                P.S. JAIMAL DUMRI URDU<br>
+                PAROO<br>
+                MUZAFFARPUR<br>
+                DISE CODE- 10140307401<br>
+                Bill Period From 01/05/2026 TO 31/05/2026
+            </div>
+            <div style="border-left: 1px dashed #000; padding-left: 15px;">
+                <b>INV. NO. :- T-00019</b><br>
+                <b>INV. DATE :- 31/05/2026</b><br>
+                BENEFITED STUDENT<br>
+                CLASS ( I-V ) = 1307<br>
+                CLASS (VI-VIII) = XXXXXXXX<br>
+                EGG/S.FRUITS = 282
+            </div>
+        </div>
+
+        <div class="dashed-line"></div>
+
+        <!-- आइटम की सूची वाली टेबल -->
+        <table>
+            <thead>
+                <tr>
+                    <th>SL.</th>
+                    <th>PRODUCT DESCRIPTION</th>
+                    <th>HSN</th>
+                    <th>QTY</th>
+                    <th>UNIT</th>
+                    <th>RATE</th>
+                    <th>Amount</th>
+                    <th>GST%</th>
+                    <th>Inc.Rate</th>
+                </tr>
+            </thead>
+            <tbody class="border-bottom">
+                <tr>
+                    <td>1.</td>
+                    <td>MIXED DAL</td>
+                    <td>0708</td>
+                    <td>13.000</td>
+                    <td>KG</td>
+                    <td>130.00</td>
+                    <td>1690.00</td>
+                    <td></td>
+                    <td>130.00</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>SOYABEAN WHOLE</td>
+                    <td>2304</td>
+                    <td>4.000</td>
+                    <td>KG</td>
+                    <td>100.00</td>
+                    <td>400.00</td>
+                    <td>5.00</td>
+                    <td>105.00</td>
+                </tr>
+                <!-- आप JavaScript का उपयोग करके फॉर्म से यहाँ और भी आइटम डायनामिक रूप से जोड़ सकते हैं -->
+            </tbody>
+        </table>
+
+        <!-- बिल का टोटल कैलकुलेशन -->
+        <div class="total-section">
+            <div>No. of Items 2</div>
+            <div class="total-calcs">
+                <div><span>Total.........</span> <span>2090.00</span></div>
+                <div><span>Add CGST</span> <span>20.00</span></div>
+                <div><span>Add SGST</span> <span>20.00</span></div>
+                <div><span>Round Off</span> <span>0.00</span></div>
+                <div class="dashed-line"></div>
+                <div><b>Grand Total .........</b> <b>2130.00</b></div>
+                <div class="dashed-line"></div>
+            </div>
+        </div>
+
+        <div class="voucher-text">Voucher</div>
+
+        <!-- बैंक डिटेल्स और सिग्नेचर -->
+        <div class="flex-row">
+            <div>
+                <b>BANK DETAILS</b><br>
+                ACCOUNT NO. : 37894860929<br>
+                BANK NAME   : STATE BANK OF INDIA<br>
+                BRANCH      : REPURA BAZAR, SARAIYA<br>
+                IFSC        : SBIN0017441
+            </div>
+            <div style="display: flex; align-items: flex-end; padding-right: 20px;">
+                <div style="border-top: 1px dashed #000; padding-top: 5px;">Authorised signatory</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; font-weight: bold;">
+            (Rupees Two Thousand One Hundred Thirty Only.)
+        </div>
+        <div class="dashed-line" style="margin: 5px 0;"></div>
+        <div class="flex-row">
+            <div>#Subject to MUZAFFARPUR(BIHAR) Jurisdiction only</div>
+            <div>For SHUBH KIRANA STORES</div>
+        </div>
+        
+        <div style="margin-top: 20px; font-size: 12px; border-bottom: 1px dashed #000; padding-bottom: 5px;">
+            #Computer Generated Invoice./Design & Developed By Web Developer
+        </div>
+    </div>
+
+</body>
+</html>
