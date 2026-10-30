@@ -3,90 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tax Invoice Generator</title>
+    <title>Dynamic Tax Invoice Generator</title>
     <style>
-        /* बिल का फॉन्ट कंप्यूटर जनरेटेड (Dot Matrix) जैसा दिखाने के लिए Monospace का उपयोग किया गया है */
-        body {
-            font-family: 'Courier New', Courier, monospace; 
-            margin: 20px;
-            font-size: 14px;
-            color: #000;
-        }
+        /* सामान्य वेबपेज और डाटा एंट्री फॉर्म की डिजाइन */
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f9; }
+        .no-print { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        h3 { color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 5px; }
+        .form-row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .form-group { display: flex; flex-direction: column; flex: 1; min-width: 150px; }
+        .form-group label { font-weight: bold; margin-bottom: 5px; font-size: 14px; }
+        .form-group input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        
+        table.input-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        table.input-table th, table.input-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        table.input-table input { width: 90%; padding: 5px; }
+        
+        .btn { padding: 10px 20px; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 15px; }
+        .btn-add { background-color: #008CBA; }
+        .btn-generate { background-color: #4CAF50; font-weight: bold; font-size: 18px; width: 100%; margin-top: 15px; }
+
+        /* ==========================================
+           प्रिंट (PDF) वाले बिल की डिजाइन (Dot Matrix Style)
+           ========================================== */
         .invoice-box {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #eee;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            display: none; /* स्क्रीन पर छिपा रहेगा */
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px; color: #000; background: #fff; max-width: 800px; margin: auto; padding: 20px;
         }
         .text-center { text-align: center; }
         .flex-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .dashed-line { border-top: 1px dashed #000; margin: 10px 0; }
         
-        .dashed-line { 
-            border-top: 1px dashed #000; 
-            margin: 10px 0; 
-        }
-        
-        /* टेबल की डिजाइन */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border-left: 1px dashed #000;
-            border-right: 1px dashed #000;
-            padding: 4px 8px;
-        }
-        th {
-            border-top: 1px dashed #000;
-            border-bottom: 1px dashed #000;
-            text-align: left;
-        }
+        table.print-table { width: 100%; border-collapse: collapse; }
+        table.print-table th, table.print-table td { border-left: 1px dashed #000; border-right: 1px dashed #000; padding: 4px 8px; }
+        table.print-table th { border-top: 1px dashed #000; border-bottom: 1px dashed #000; text-align: left; }
         .border-bottom { border-bottom: 1px dashed #000; }
         
-        /* टोटल सेक्शन की डिजाइन */
-        .total-section {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-        .total-calcs {
-            width: 40%;
-        }
-        .total-calcs div {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 3px;
-        }
-        
-        /* लाल रंग का Voucher टेक्स्ट */
-        .voucher-text {
-            color: #ff4d4d;
-            font-size: 28px;
-            font-weight: bold;
-            text-align: right;
-            margin: 20px 0;
-            font-family: Arial, sans-serif;
-        }
+        .total-section { display: flex; justify-content: space-between; margin-top: 10px; }
+        .total-calcs { width: 40%; }
+        .total-calcs div { display: flex; justify-content: space-between; margin-bottom: 3px; }
+        .voucher-text { color: #ff4d4d; font-size: 28px; font-weight: bold; text-align: right; margin: 20px 0; font-family: Arial, sans-serif; }
 
-        /* प्रिंट बटन छिपाने के लिए जब पेज प्रिंट हो रहा हो */
+        /* प्रिंट करते समय डाटा एंट्री फॉर्म छिपाएं और बिल दिखाएं */
         @media print {
-            .no-print { display: none; }
-            .invoice-box { border: none; box-shadow: none; padding: 0; }
+            body { margin: 0; background: #fff; }
+            .no-print { display: none !important; }
+            .invoice-box { display: block !important; border: none; box-shadow: none; padding: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- प्रिंट बटन -->
-    <div class="text-center no-print" style="margin-bottom: 20px;">
-        <button onclick="window.print()" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background: #4CAF50; color: white; border: none; border-radius: 5px;">
-            Print / Save as PDF
-        </button>
+    <!-- 1. DATA ENTRY SECTION -->
+    <div class="no-print">
+        <h2 style="text-align: center; color: #4CAF50;">Invoice Data Entry Form</h2>
+        
+        <h3>General Details</h3>
+        <div class="form-row">
+            <div class="form-group"><label>Invoice No.</label><input type="text" id="in_inv_no" value="T-00019"></div>
+            <div class="form-group"><label>Invoice Date</label><input type="text" id="in_inv_date" value="31/05/2026"></div>
+            <div class="form-group"><label>Bill Period</label><input type="text" id="in_period" value="01/05/2026 TO 31/05/2026"></div>
+        </div>
+
+        <h3>Buyer Details</h3>
+        <div class="form-row">
+            <div class="form-group"><label>Buyer Name/Designation</label><input type="text" id="in_buyer_name" value="HEAD MASTER/INCHARGE HEAD MASTER"></div>
+            <div class="form-group"><label>School/Org Name</label><input type="text" id="in_school" value="P.S. JAIMAL DUMRI URDU"></div>
+            <div class="form-group"><label>Block & District</label><input type="text" id="in_address" value="PAROO, MUZAFFARPUR"></div>
+            <div class="form-group"><label>DISE CODE</label><input type="text" id="in_dise" value="10140307401"></div>
+        </div>
+
+        <h3>Item Details</h3>
+        <table class="input-table" id="items_table">
+            <thead>
+                <tr>
+                    <th>Product Description</th>
+                    <th style="width: 80px;">HSN</th>
+                    <th style="width: 80px;">Qty</th>
+                    <th style="width: 60px;">Unit</th>
+                    <th style="width: 100px;">Rate</th>
+                    <th style="width: 70px;">GST %</th>
+                    <th style="width: 50px;">Action</th>
+                </tr>
+            </thead>
+            <tbody id="items_body">
+                <!-- पहली पंक्ति (Row) -->
+                <tr>
+                    <td><input type="text" class="i_desc" value="MIXED DAL"></td>
+                    <td><input type="text" class="i_hsn" value="0708"></td>
+                    <td><input type="number" class="i_qty" value="13.000"></td>
+                    <td><input type="text" class="i_unit" value="KG"></td>
+                    <td><input type="number" class="i_rate" value="130.00"></td>
+                    <td><input type="number" class="i_gst" value="0"></td>
+                    <td><button type="button" onclick="this.parentElement.parentElement.remove()" style="color:red; cursor:pointer;">X</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-add" onclick="addRow()">+ Add New Item</button>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ccc;">
+        
+        <!-- बिल जनरेट और पीडीएफ सेव करने का बटन -->
+        <button class="btn btn-generate" onclick="generateAndPrintBill()">Generate PDF / Print Bill</button>
     </div>
 
-    <!-- मुख्य इनवॉइस कंटेनर -->
-    <div class="invoice-box">
+
+    <!-- 2. INVOICE PREVIEW / PRINT SECTION (यह सिर्फ प्रिंट करते समय दिखेगा) -->
+    <div class="invoice-box" id="printable_invoice">
         <div class="text-center">
             <div style="letter-spacing: 2px;">TAX INVOICE</div>
             <div>CREDIT MEMO <span style="float: right;">Original/Dupli./Tripl.</span></div>
@@ -94,94 +117,60 @@
             <div>REPURA BAZAR, SARAIYA, MUZAFFARPUR</div>
             <div><b>MUZAFFARPUR(BIHAR)</b></div>
         </div>
-
         <div class="flex-row" style="margin-top: 10px;">
             <div>GSTIN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10BOOPK2572L1ZS</div>
             <div>Phone : 9955566086, 8340652131</div>
         </div>
-
         <div class="dashed-line"></div>
 
+        <!-- Dynamic Buyer Data -->
         <div class="flex-row">
             <div>
-                <b>HEAD MASTER/INCHARGE HEAD MASTER</b><br>
-                P.S. JAIMAL DUMRI URDU<br>
-                PAROO<br>
-                MUZAFFARPUR<br>
-                DISE CODE- 10140307401<br>
-                Bill Period From 01/05/2026 TO 31/05/2026
+                <b id="out_buyer_name"></b><br>
+                <span id="out_school"></span><br>
+                <span id="out_address"></span><br>
+                DISE CODE- <span id="out_dise"></span><br>
+                Bill Period From <span id="out_period"></span>
             </div>
             <div style="border-left: 1px dashed #000; padding-left: 15px;">
-                <b>INV. NO. :- T-00019</b><br>
-                <b>INV. DATE :- 31/05/2026</b><br>
+                <b>INV. NO. :- <span id="out_inv_no"></span></b><br>
+                <b>INV. DATE :- <span id="out_inv_date"></span></b><br>
                 BENEFITED STUDENT<br>
                 CLASS ( I-V ) = 1307<br>
                 CLASS (VI-VIII) = XXXXXXXX<br>
                 EGG/S.FRUITS = 282
             </div>
         </div>
-
         <div class="dashed-line"></div>
 
-        <!-- आइटम की सूची वाली टेबल -->
-        <table>
+        <!-- Dynamic Items Table -->
+        <table class="print-table">
             <thead>
                 <tr>
-                    <th>SL.</th>
-                    <th>PRODUCT DESCRIPTION</th>
-                    <th>HSN</th>
-                    <th>QTY</th>
-                    <th>UNIT</th>
-                    <th>RATE</th>
-                    <th>Amount</th>
-                    <th>GST%</th>
-                    <th>Inc.Rate</th>
+                    <th>SL.</th><th>PRODUCT DESCRIPTION</th><th>HSN</th><th>QTY</th><th>UNIT</th><th>RATE</th><th>Amount</th><th>GST%</th><th>Inc.Rate</th>
                 </tr>
             </thead>
-            <tbody class="border-bottom">
-                <tr>
-                    <td>1.</td>
-                    <td>MIXED DAL</td>
-                    <td>0708</td>
-                    <td>13.000</td>
-                    <td>KG</td>
-                    <td>130.00</td>
-                    <td>1690.00</td>
-                    <td></td>
-                    <td>130.00</td>
-                </tr>
-                <tr>
-                    <td>2.</td>
-                    <td>SOYABEAN WHOLE</td>
-                    <td>2304</td>
-                    <td>4.000</td>
-                    <td>KG</td>
-                    <td>100.00</td>
-                    <td>400.00</td>
-                    <td>5.00</td>
-                    <td>105.00</td>
-                </tr>
-                <!-- आप JavaScript का उपयोग करके फॉर्म से यहाँ और भी आइटम डायनामिक रूप से जोड़ सकते हैं -->
+            <tbody class="border-bottom" id="out_items_body">
+                <!-- Items will be injected here via JavaScript -->
             </tbody>
         </table>
 
-        <!-- बिल का टोटल कैलकुलेशन -->
+        <!-- Totals Calculation -->
         <div class="total-section">
-            <div>No. of Items 2</div>
+            <div>No. of Items <span id="out_item_count">0</span></div>
             <div class="total-calcs">
-                <div><span>Total.........</span> <span>2090.00</span></div>
-                <div><span>Add CGST</span> <span>20.00</span></div>
-                <div><span>Add SGST</span> <span>20.00</span></div>
-                <div><span>Round Off</span> <span>0.00</span></div>
+                <div><span>Total.........</span> <span id="out_total_amt">0.00</span></div>
+                <div><span>Add CGST</span> <span id="out_cgst">0.00</span></div>
+                <div><span>Add SGST</span> <span id="out_sgst">0.00</span></div>
+                <div><span>Round Off</span> <span id="out_roundoff">0.00</span></div>
                 <div class="dashed-line"></div>
-                <div><b>Grand Total .........</b> <b>2130.00</b></div>
+                <div><b>Grand Total .........</b> <b id="out_grand_total">0.00</b></div>
                 <div class="dashed-line"></div>
             </div>
         </div>
-
         <div class="voucher-text">Voucher</div>
 
-        <!-- बैंक डिटेल्स और सिग्नेचर -->
+        <!-- Footer / Bank Details -->
         <div class="flex-row">
             <div>
                 <b>BANK DETAILS</b><br>
@@ -194,20 +183,41 @@
                 <div style="border-top: 1px dashed #000; padding-top: 5px;">Authorised signatory</div>
             </div>
         </div>
-
-        <div style="margin-top: 20px; font-weight: bold;">
-            (Rupees Two Thousand One Hundred Thirty Only.)
-        </div>
+        <div style="margin-top: 20px; font-weight: bold;">(Rupees <span id="out_words"></span> Only.)</div>
         <div class="dashed-line" style="margin: 5px 0;"></div>
         <div class="flex-row">
             <div>#Subject to MUZAFFARPUR(BIHAR) Jurisdiction only</div>
             <div>For SHUBH KIRANA STORES</div>
         </div>
-        
         <div style="margin-top: 20px; font-size: 12px; border-bottom: 1px dashed #000; padding-bottom: 5px;">
-            #Computer Generated Invoice./Design & Developed By Web Developer
+            #Computer Generated Invoice. / Designed for Web
         </div>
     </div>
 
-</body>
-</html>
+    <!-- JAVASCRIPT FOR LOGIC & CALCULATION -->
+    <script>
+        // नई पंक्ति जोड़ने का फंक्शन
+        function addRow() {
+            const tbody = document.getElementById('items_body');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" class="i_desc" placeholder="Item Name"></td>
+                <td><input type="text" class="i_hsn" placeholder="HSN"></td>
+                <td><input type="number" class="i_qty" value="1"></td>
+                <td><input type="text" class="i_unit" value="KG"></td>
+                <td><input type="number" class="i_rate" value="0"></td>
+                <td><input type="number" class="i_gst" value="0"></td>
+                <td><button type="button" onclick="this.parentElement.parentElement.remove()" style="color:red; cursor:pointer;">X</button></td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        // बिल जनरेट करने और कैलकुलेट करने का फंक्शन
+        function generateAndPrintBill() {
+            // 1. General Details सेट करें
+            document.getElementById('out_inv_no').innerText = document.getElementById('in_inv_no').value;
+            document.getElementById('out_inv_date').innerText = document.getElementById('in_inv_date').value;
+            document.getElementById('out_period').innerText = document.getElementById('in_period').value;
+            
+            // 2. Buyer Details सेट करें
+            document.getElementById('out
