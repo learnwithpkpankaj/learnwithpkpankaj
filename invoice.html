@@ -32,16 +32,27 @@
         .total-calcs div { display: flex; justify-content: space-between; margin-bottom: 3px; }
         .voucher-text { color: #ff4d4d; font-size: 28px; font-weight: bold; text-align: right; margin: 20px 0; font-family: Arial, sans-serif; }
 
+        /* PRINT SETTINGS - फिक्स किया गया है ताकि PDF न कटे */
         @media print {
             .no-print, .form-section { display: none !important; }
-            .invoice-box { display: block !important; border: none; box-shadow: none; padding: 0; }
-            body { background: #fff; padding: 0; }
-            { padding: 15px; }
+            body { background: #fff; padding: 0; margin: 0; }
+            .invoice-box { 
+                display: block !important; 
+                border: none; 
+                box-shadow: none; 
+                padding: 0; 
+                max-width: 100%; /* किनारे कटने से रोकने के लिए */
+                width: 100%; 
+                margin: 0;
+            }
+            /* अगर आइटम ज्यादा हों तो टेबल बीच से खराब न हो */
+            table { page-break-inside: auto; }
+            tr { page-break-inside: avoid; page-break-after: auto; }
         }
         @page {
-    size: auto;
-    margin: 0mm; /* Browser ke default header/footer ko chhupane ke liye */
-}
+            size: A4 portrait; /* पेपर साइज़ A4 सेट किया */
+            margin: 10mm; /* पेज के चारों तरफ 1cm का सुरक्षित मार्जिन */
+        }
     </style>
 </head>
 <body>
@@ -51,16 +62,16 @@
         
         <h4>School Details:</h4>
         <div class="input-group">
-            <input type="text" id="schoolName" placeholder="School Name (e.g. P.S. JAIMAL DUMRI URDU)">
-            <input type="text" id="schoolAddress" placeholder="Address (e.g. PAROO, MUZAFFARPUR)">
+            <input type="text" id="schoolName" placeholder="School Name (e.g. P.S. JAIMAL DUMRI URDU)" value="M. S SANDHA KANYA, MOTIPUR">
+            <input type="text" id="schoolAddress" placeholder="Address (e.g. PAROO, MUZAFFARPUR)" value="">
             <input type="text" id="udiseCode" placeholder="DISE Code (e.g. 10140307401)">
         </div>
 
         <h4>Invoice Details:</h4>
         <div class="input-group">
-            <input type="text" id="invNo" placeholder="Invoice No. (e.g. T-00020)">
+            <input type="text" id="invNo" placeholder="Invoice No. (e.g. T-00020)" value="L-6001">
             <input type="date" id="invDate">
-            <input type="text" id="billPeriod" placeholder="Bill Period (e.g. 01/06/2026 TO 30/06/2026)">
+            <input type="text" id="billPeriod" placeholder="Bill Period (e.g. 01/06/2026 TO 30/06/2026)" value="01/06/2026 TO 30/06/2026">
         </div>
 
         <h4>Items List:</h4>
@@ -80,7 +91,7 @@
                 <!-- Pre-filled items start -->
                 <tr>
                     <td><input type="text" class="desc" value="POTATO"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="601"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
@@ -89,7 +100,7 @@
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Onion"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="602"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
@@ -98,7 +109,7 @@
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Garlic"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="603"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
@@ -107,7 +118,7 @@
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Sukhi Mirch"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="604"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
@@ -116,7 +127,7 @@
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Tejpatta"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="605"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
@@ -125,106 +136,97 @@
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Arhar Daal"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="606"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
-                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><input type="number" class="gst" value="5" step="0.01"></td>
                     <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Masoor daal"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="607"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
-                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><input type="number" class="gst" value="5" step="0.01"></td>
                     <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Chana"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="608"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
-                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><input type="number" class="gst" value="5" step="0.01"></td>
                     <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Soya Bari"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="609"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
-                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><input type="number" class="gst" value="5" step="0.01"></td>
                     <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Haldi Powder"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="610"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
-                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><input type="number" class="gst" value="5" step="0.01"></td>
                     <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Chilli Powder"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="611"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
-                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><input type="number" class="gst" value="5" step="0.01"></td>
                     <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Dhaniya Powder"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="612"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
-                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><input type="number" class="gst" value="5" step="0.01"></td>
                     <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Jeera Saboot"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="613"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
-                    <td><input type="number" class="gst" step="0.01"></td>
-                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="desc" value="Panchforna"></td>
-                    <td><input type="text" class="hsn"></td>
-                    <td><input type="number" class="qty" step="0.01"></td>
-                    <td><input type="text" class="unit" value="KG"></td>
-                    <td><input type="number" class="rate" step="0.01"></td>
-                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><input type="number" class="gst" value="5" step="0.01"></td>
                     <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Mustard Oil"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="614"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="LTR."></td>
                     <td><input type="number" class="rate" step="0.01"></td>
-                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><input type="number" class="gst" value="5" step="0.01"></td>
                     <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Garam Masala"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="615"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
-                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><input type="number" class="gst" value="5" step="0.01"></td>
                     <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
                 </tr>
                 <tr>
                     <td><input type="text" class="desc" value="Tata salt"></td>
-                    <td><input type="text" class="hsn"></td>
+                    <td><input type="text" class="hsn" value="616"></td>
                     <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
                     <td><input type="number" class="rate" step="0.01"></td>
@@ -253,7 +255,6 @@
             </tbody>
         </table>
         
-        <!-- Yahan par dono buttons diye gaye hain -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
             <button class="btn btn-blue" type="button" onclick="addRow()">+ Add New Item</button>
             <div style="display: flex; gap: 10px;">
@@ -283,7 +284,7 @@
             <div>
                 <b>HEAD MASTER/HEAD TEACHER/INCHARGE HEAD MASTER</b><br>
                 <span id="outSchoolName"></span><br>
-                <span id="outSchoolAddress"></span><br>
+                <span id="outSchoolAddress"></span>
                 UDISE CODE- <span id="outUdiseCode"></span><br>
                 Bill Period : <span id="outBillPeriod"></span>
             </div>
@@ -325,8 +326,8 @@
                 <div class="dashed-line"></div>
             </div>
         </div>
-       
-        <div class="flex-row">
+        
+        <div class="flex-row" style="margin-top: 20px;">
             <div>
                 <b>BANK DETAILS</b><br>
                 ACCOUNT NO. : 50200091641524<br>
@@ -364,12 +365,14 @@
             btn.closest("tr").remove();
         }
 
-        // Yeh function sirf bill calculate karega aur screen par preview dikhayega
         function calculateBill() {
             document.getElementById("outSchoolName").innerText = document.getElementById("schoolName").value;
-            document.getElementById("outSchoolAddress").innerText = document.getElementById("schoolAddress").value;
+            
+            // Address ke liye check taki double space na bane
+            const address = document.getElementById("schoolAddress").value;
+            document.getElementById("outSchoolAddress").innerHTML = address ? address + "<br>" : "";
+            
             document.getElementById("outUdiseCode").innerText = document.getElementById("udiseCode").value;
-
             document.getElementById("outInvNo").innerText = document.getElementById("invNo").value;
             document.getElementById("outBillPeriod").innerText = document.getElementById("billPeriod").value;
             
@@ -396,7 +399,6 @@
                 const rate = parseFloat(row.querySelector(".rate").value) || 0;
                 const gst = parseFloat(row.querySelector(".gst").value) || 0;
 
-                // Agar Qty aur Rate bhara hoga, tabhi bill me item aayega
                 if(desc && qty > 0 && rate > 0) {
                     itemCount++;
                     const amount = qty * rate;
@@ -435,16 +437,12 @@
             document.getElementById("outRoundOff").innerText = roundOff.toFixed(2);
             document.getElementById("outGrandTotal").innerText = roundedTotal.toFixed(2);
 
-            // Bill preview box ko screen par show karna
             document.getElementById("printArea").style.display = "block";
-            
-            // Calculate button dabane par page thoda niche scroll ho jayega taaki preview dikhe
             document.getElementById("printArea").scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Yeh function print open karne ke liye hai
         function printBill() {
-            calculateBill(); // Print karne se pehle ek baar aur calculation update karna
+            calculateBill(); 
             window.print();
         }
     </script>
