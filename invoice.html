@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Tax Invoice Generator</title>
+    <title>Tax Invoice</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
         .form-section { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-bottom: 20px; max-width: 900px; margin: 0 auto 20px auto; }
@@ -13,12 +13,13 @@
         table.input-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
         table.input-table th, table.input-table td { border: 1px solid #ddd; padding: 4px; }
         table.input-table input { width: 95%; padding: 6px; box-sizing: border-box; }
-        .btn { background: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        .btn { background: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: bold; }
         .btn:hover { opacity: 0.9; }
         .btn-blue { background: #2196F3; }
         .btn-red { background: #f44336; padding: 5px 10px; }
+        .btn-orange { background: #ff9800; }
         
-        .invoice-box { font-family: 'Courier New', Courier, monospace; background: #fff; max-width: 800px; margin: auto; padding: 20px; font-size: 14px; color: #000; display: none; }
+        .invoice-box { font-family: 'Courier New', Courier, monospace; background: #fff; max-width: 800px; margin: auto; padding: 20px; font-size: 14px; color: #000; display: none; margin-bottom: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         .text-center { text-align: center; }
         .flex-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
         .dashed-line { border-top: 1px dashed #000; margin: 10px 0; }
@@ -247,33 +248,39 @@
             </tbody>
         </table>
         
-        <button class="btn btn-blue" type="button" onclick="addRow()">+ Add New Item</button>
-        <button class="btn" type="button" onclick="generateBill()" style="float: right; font-size: 16px;">Generate & Print PDF</button>
+        <!-- Yahan par dono buttons diye gaye hain -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+            <button class="btn btn-blue" type="button" onclick="addRow()">+ Add New Item</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-orange" type="button" onclick="calculateBill()" style="font-size: 16px;">Calculate Amount Preview</button>
+                <button class="btn" type="button" onclick="printBill()" style="font-size: 16px;">Print / Save PDF</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Generated Invoice Area -->
+    <!-- Generated Invoice Area (Preview) -->
     <div class="invoice-box" id="printArea">
         <div class="text-center">
             <div style="letter-spacing: 2px;">TAX INVOICE</div>
             <div>CREDIT MEMO <span style="float: right;">Original/Dupli./Tripl.</span></div>
-            <h2 style="margin: 5px 0;">SHUBH KIRANA STORES</h2>
-            <div>REPURA BAZAR, SARAIYA, MUZAFFARPUR</div>
-            <div><b>MUZAFFARPUR(BIHAR)</b></div>
+            <h2 style="margin: 5px 0;">M/S. LAKSHMI KIRANA</h2>
+            <div>DHUMNAGAR, MOTIPUR, MUZAFFARPUR</div>
+            <div><b>MUZAFFARPUR(BIHAR) 843111</b></div>
         </div>
 
         <div class="flex-row" style="margin-top: 10px;">
-            <div>GSTIN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10BOOPK2572L1ZS</div>
-            <div>Phone : 9955566086, 8340652131</div>
+            <div>GSTIN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10JYYPS7093J1ZC</div>
+            <div>Phone : 7367093685</div>
         </div>
 
         <div class="dashed-line"></div>
 
         <div class="flex-row">
             <div>
-                <b>HEAD MASTER/INCHARGE HEAD MASTER</b><br>
+                <b>HEAD MASTER/HEAD TEACHER/INCHARGE HEAD MASTER</b><br>
                 <span id="outSchoolName"></span><br>
                 <span id="outSchoolAddress"></span><br>
-                DISE CODE- <span id="outUdiseCode"></span><br>
+                UDISE CODE- <span id="outUdiseCode"></span><br>
                 Bill Period : <span id="outBillPeriod"></span>
             </div>
             <div style="border-left: 1px dashed #000; padding-left: 15px;">
@@ -314,16 +321,14 @@
                 <div class="dashed-line"></div>
             </div>
         </div>
-
-        <div class="voucher-text">Voucher</div>
-
+       
         <div class="flex-row">
             <div>
                 <b>BANK DETAILS</b><br>
-                ACCOUNT NO. : 37894860929<br>
-                BANK NAME   : STATE BANK OF INDIA<br>
-                BRANCH      : REPURA BAZAR, SARAIYA<br>
-                IFSC        : SBIN0017441
+                ACCOUNT NO. : 50200091641524<br>
+                BANK NAME   : HDFC BANK LTD<br>
+                BRANCH      : BRAHMPURA, MUZAFFARPUR<br>
+                IFSC        : HDFC0003716
             </div>
             <div style="display: flex; align-items: flex-end; padding-right: 20px;">
                 <div style="border-top: 1px dashed #000; padding-top: 5px;">Authorised signatory</div>
@@ -331,7 +336,7 @@
         </div>
         
         <div style="margin-top: 20px; font-size: 12px; border-bottom: 1px dashed #000; padding-bottom: 5px;">
-            #Computer Generated Invoice./Design & Developed By Web Developer
+            #Computer Generated Invoice./Design & Developed By Developer
         </div>
     </div>
 
@@ -355,7 +360,8 @@
             btn.closest("tr").remove();
         }
 
-        function generateBill() {
+        // Yeh function sirf bill calculate karega aur screen par preview dikhayega
+        function calculateBill() {
             document.getElementById("outSchoolName").innerText = document.getElementById("schoolName").value;
             document.getElementById("outSchoolAddress").innerText = document.getElementById("schoolAddress").value;
             document.getElementById("outUdiseCode").innerText = document.getElementById("udiseCode").value;
@@ -386,8 +392,7 @@
                 const rate = parseFloat(row.querySelector(".rate").value) || 0;
                 const gst = parseFloat(row.querySelector(".gst").value) || 0;
 
-                // Only generate row if description, qty, and rate are filled.
-                // Leave fields empty in data entry form if you want to skip an item for that month.
+                // Agar Qty aur Rate bhara hoga, tabhi bill me item aayega
                 if(desc && qty > 0 && rate > 0) {
                     itemCount++;
                     const amount = qty * rate;
@@ -426,7 +431,16 @@
             document.getElementById("outRoundOff").innerText = roundOff.toFixed(2);
             document.getElementById("outGrandTotal").innerText = roundedTotal.toFixed(2);
 
+            // Bill preview box ko screen par show karna
             document.getElementById("printArea").style.display = "block";
+            
+            // Calculate button dabane par page thoda niche scroll ho jayega taaki preview dikhe
+            document.getElementById("printArea").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Yeh function print open karne ke liye hai
+        function printBill() {
+            calculateBill(); // Print karne se pehle ek baar aur calculation update karna
             window.print();
         }
     </script>
