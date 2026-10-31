@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tax Invoice</title>
+    <title>Dynamic Tax Invoice Generator</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
-        .form-section { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-bottom: 20px; max-width: 800px; margin: 0 auto 20px auto; }
+        .form-section { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-bottom: 20px; max-width: 900px; margin: 0 auto 20px auto; }
         .form-section h2 { margin-top: 0; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }
         .input-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
         .input-group input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; flex: 1; min-width: 120px; }
         table.input-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
-        table.input-table th, table.input-table td { border: 1px solid #ddd; padding: 8px; }
-        table.input-table input { width: 90%; padding: 5px; }
+        table.input-table th, table.input-table td { border: 1px solid #ddd; padding: 4px; }
+        table.input-table input { width: 95%; padding: 6px; box-sizing: border-box; }
         .btn { background: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; }
         .btn:hover { opacity: 0.9; }
         .btn-blue { background: #2196F3; }
@@ -43,7 +43,6 @@
     <div class="form-section no-print">
         <h2>Bill Details Data Entry</h2>
         
-        <!-- School ki details enter karne ka option -->
         <h4>School Details:</h4>
         <div class="input-group">
             <input type="text" id="schoolName" placeholder="School Name (e.g. P.S. JAIMAL DUMRI URDU)">
@@ -58,29 +57,193 @@
             <input type="text" id="billPeriod" placeholder="Bill Period (e.g. 01/06/2026 TO 30/06/2026)">
         </div>
 
-        <h4>Add Items:</h4>
+        <h4>Items List:</h4>
         <table class="input-table" id="itemTable">
             <thead>
                 <tr>
-                    <th>Product Name</th>
-                    <th>HSN</th>
-                    <th>Qty</th>
-                    <th>Unit</th>
-                    <th>Rate</th>
-                    <th>GST %</th>
-                    <th>Action</th>
+                    <th style="width: 25%;">Product Name</th>
+                    <th style="width: 12%;">HSN</th>
+                    <th style="width: 12%;">Qty</th>
+                    <th style="width: 12%;">Unit</th>
+                    <th style="width: 15%;">Rate</th>
+                    <th style="width: 12%;">GST %</th>
+                    <th style="width: 10%;">Action</th>
                 </tr>
             </thead>
             <tbody id="itemBody">
+                <!-- Pre-filled items start -->
                 <tr>
-                    <td><input type="text" class="desc" placeholder="e.g. MIXED DAL"></td>
-                    <td><input type="text" class="hsn" placeholder="0708"></td>
-                    <td><input type="number" class="qty" placeholder="13" step="0.01"></td>
+                    <td><input type="text" class="desc" value="POTATO"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
                     <td><input type="text" class="unit" value="KG"></td>
-                    <td><input type="number" class="rate" placeholder="130" step="0.01"></td>
-                    <td><input type="number" class="gst" placeholder="5" step="0.01"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
                     <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
                 </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Onion"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Garlic"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Sukhi Mirch"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Tejpatta"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Arhar Daal"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Masoor daal"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Chana"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Soya Bari"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Haldi Powder"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Chilli Powder"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Dhaniya Powder"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Jeera Saboot"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Panchforna"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Mustard Oil"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="LTR."></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Garam Masala"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Tata solt"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Green Vegitable"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="desc" value="Jalawan"></td>
+                    <td><input type="text" class="hsn"></td>
+                    <td><input type="number" class="qty" step="0.01"></td>
+                    <td><input type="text" class="unit" value="KG"></td>
+                    <td><input type="number" class="rate" step="0.01"></td>
+                    <td><input type="number" class="gst" step="0.01"></td>
+                    <td><button class="btn btn-red" type="button" onclick="removeRow(this)">X</button></td>
+                </tr>
+                <!-- Pre-filled items end -->
             </tbody>
         </table>
         
@@ -91,22 +254,23 @@
     <!-- Generated Invoice Area -->
     <div class="invoice-box" id="printArea">
         <div class="text-center">
+            <div style="letter-spacing: 2px;">TAX INVOICE</div>
             <div>CREDIT MEMO <span style="float: right;">Original/Dupli./Tripl.</span></div>
-            <h2 style="margin: 5px 0;">M/S. LAKSHMI KIRANA</h2>
-            <div>DHUMNAGAR, MOTIPUR, MUZAFFARPUR</div>
-            <div><b>MUZAFFARPUR(BIHAR) 84111</b></div>
+            <h2 style="margin: 5px 0;">SHUBH KIRANA STORES</h2>
+            <div>REPURA BAZAR, SARAIYA, MUZAFFARPUR</div>
+            <div><b>MUZAFFARPUR(BIHAR)</b></div>
         </div>
 
         <div class="flex-row" style="margin-top: 10px;">
-            <div>GSTIN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10JYYPS7093J1ZC</div>
-            <div>Phone : 7367093685</div>
+            <div>GSTIN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 10BOOPK2572L1ZS</div>
+            <div>Phone : 9955566086, 8340652131</div>
         </div>
 
         <div class="dashed-line"></div>
 
         <div class="flex-row">
             <div>
-                <b>HEAD MASTER/HEAD TEACHER/INCHARGE HEAD MASTER</b><br>
+                <b>HEAD MASTER/INCHARGE HEAD MASTER</b><br>
                 <span id="outSchoolName"></span><br>
                 <span id="outSchoolAddress"></span><br>
                 DISE CODE- <span id="outUdiseCode"></span><br>
@@ -151,14 +315,15 @@
             </div>
         </div>
 
-       
+        <div class="voucher-text">Voucher</div>
+
         <div class="flex-row">
             <div>
                 <b>BANK DETAILS</b><br>
-                ACCOUNT NO. : 50200091641524<br>
-                BANK NAME   : HDFC BANK LTD<br>
-                BRANCH      :BRAHMPURA, MUZAFFARPUR<br>
-                IFSC        : HDFC0003716
+                ACCOUNT NO. : 37894860929<br>
+                BANK NAME   : STATE BANK OF INDIA<br>
+                BRANCH      : REPURA BAZAR, SARAIYA<br>
+                IFSC        : SBIN0017441
             </div>
             <div style="display: flex; align-items: flex-end; padding-right: 20px;">
                 <div style="border-top: 1px dashed #000; padding-top: 5px;">Authorised signatory</div>
@@ -166,7 +331,7 @@
         </div>
         
         <div style="margin-top: 20px; font-size: 12px; border-bottom: 1px dashed #000; padding-bottom: 5px;">
-            #Computer Generated Invoice./Design & Developed By PKP
+            #Computer Generated Invoice./Design & Developed By Web Developer
         </div>
     </div>
 
@@ -191,16 +356,13 @@
         }
 
         function generateBill() {
-            // Fetching School Details from input
             document.getElementById("outSchoolName").innerText = document.getElementById("schoolName").value;
             document.getElementById("outSchoolAddress").innerText = document.getElementById("schoolAddress").value;
             document.getElementById("outUdiseCode").innerText = document.getElementById("udiseCode").value;
 
-            // Fetching Invoice Details from input
             document.getElementById("outInvNo").innerText = document.getElementById("invNo").value;
             document.getElementById("outBillPeriod").innerText = document.getElementById("billPeriod").value;
             
-            // Format Date
             let dateVal = document.getElementById("invDate").value;
             if(dateVal) {
                 let d = new Date(dateVal);
@@ -224,6 +386,8 @@
                 const rate = parseFloat(row.querySelector(".rate").value) || 0;
                 const gst = parseFloat(row.querySelector(".gst").value) || 0;
 
+                // Only generate row if description, qty, and rate are filled.
+                // Leave fields empty in data entry form if you want to skip an item for that month.
                 if(desc && qty > 0 && rate > 0) {
                     itemCount++;
                     const amount = qty * rate;
