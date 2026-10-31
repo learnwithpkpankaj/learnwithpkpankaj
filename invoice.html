@@ -37,6 +37,10 @@
             .invoice-box { display: block !important; border: none; box-shadow: none; padding: 0; }
             body { background: #fff; padding: 0; }
         }
+        @page {
+    size: auto;
+    margin: 0mm; /* Browser ke default header/footer ko chhupane ke liye */
+}
     </style>
 </head>
 <body>
@@ -261,8 +265,7 @@
     <!-- Generated Invoice Area (Preview) -->
     <div class="invoice-box" id="printArea">
         <div class="text-center">
-            <div style="letter-spacing: 2px;">TAX INVOICE</div>
-            <div>CREDIT MEMO <span style="float: right;">Original/Dupli./Tripl.</span></div>
+            <div style="letter-spacing: 2px;">CREDIT MEMO</div>
             <h2 style="margin: 5px 0;">M/S. LAKSHMI KIRANA</h2>
             <div>DHUMNAGAR, MOTIPUR, MUZAFFARPUR</div>
             <div><b>MUZAFFARPUR(BIHAR) 843111</b></div>
@@ -336,7 +339,7 @@
         </div>
         
         <div style="margin-top: 20px; font-size: 12px; border-bottom: 1px dashed #000; padding-bottom: 5px;">
-            #Computer Generated Invoice./Design & Developed By Developer
+            #Computer Generated Invoice./Design & Developed By LAKSHMI KIRANA
         </div>
     </div>
 
